@@ -1,6 +1,57 @@
-<apex:page>
-<!-- Begin Default Content REMOVE THIS -->
-<h1>Congratulations</h1>
-This is your new Page
-<!-- End Default Content REMOVE THIS -->
+<apex:page renderAs="pdf" applyBodyTag="false" standardStylesheets="false" controller="dataTableCon">
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                margin: 0 10px 180px 10px;
+                @top-center {
+                    width: 100%;
+                    content: element(header);
+                }
+                @bottom-center {
+                    width: 100%;
+                    content: element(footer);
+                }
+            }
+            div.header {
+                margin-top: 65px;
+                position: running(header);
+            }
+            .header-red-line {
+                height: 20px;
+                background-color: #ff5721;
+            }
+            .header-info {
+                height: 200px;
+                background-color: #f3f3f3;
+            }
+            div.footer {
+                height: 20px;
+                background-color: #ff5721;
+                position: running(footer);
+            }
+        </style>
+    </head>
+    <div class="header">
+        <div class="header-red-line"></div>
+        <div class="header-info"></div>
+        <div class="content">
+            <apex:dataTable value="{!accounts}" var="account" id="theTable" rowClasses="odd,even" styleClass="tableClass">
+                <apex:facet name="caption">table caption</apex:facet>
+                <apex:facet name="header">table header</apex:facet>
+                <apex:facet name="footer">table footer</apex:facet>
+
+                <apex:column>
+                    <apex:facet name="header">Name</apex:facet>
+                    <apex:facet name="footer">column footer</apex:facet>
+                    <apex:outputText value="{!account.name}" />
+                </apex:column>
+
+                <apex:column>
+                    <apex:facet name="header">Owner</apex:facet>
+                    <apex:facet name="footer">column footer</apex:facet>
+                    <apex:outputText value="{!account.owner.name}" />
+                </apex:column>
+            </apex:dataTable>
+        </div>
+    </div>
 </apex:page>
