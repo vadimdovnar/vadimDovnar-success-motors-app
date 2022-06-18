@@ -1,57 +1,31 @@
-<apex:page renderAs="pdf" applyBodyTag="false" standardStylesheets="false" controller="dataTableCon">
+<apex:page renderAs="pdf" applyBodyTag="false"  standardStylesheets="false" standardController="Account">
     <head>
         <style type="text/css" media="print">
             @page {
-                margin: 0 10px 180px 10px;
-                @top-center {
-                    width: 100%;
-                    content: element(header);
-                }
-                @bottom-center {
-                    width: 100%;
-                    content: element(footer);
-                }
+                width: 100%;
+                padding: 80px 0 0 0;
+                margin: 0;
             }
-            div.header {
-                margin-top: 65px;
-                position: running(header);
+            body {
+                font-family: sans-serif;
             }
             .header-red-line {
+                background-color: #FF5721;
                 height: 20px;
-                background-color: #ff5721;
+                width: 100%;
             }
             .header-info {
+                background: #F3F3F3;
                 height: 200px;
-                background-color: #f3f3f3;
-            }
-            div.footer {
-                height: 20px;
-                background-color: #ff5721;
-                position: running(footer);
             }
         </style>
     </head>
-    <div class="header">
-        <div class="header-red-line"></div>
-        <div class="header-info"></div>
-        <div class="content">
-            <apex:dataTable value="{!accounts}" var="account" id="theTable" rowClasses="odd,even" styleClass="tableClass">
-                <apex:facet name="caption">table caption</apex:facet>
-                <apex:facet name="header">table header</apex:facet>
-                <apex:facet name="footer">table footer</apex:facet>
 
-                <apex:column>
-                    <apex:facet name="header">Name</apex:facet>
-                    <apex:facet name="footer">column footer</apex:facet>
-                    <apex:outputText value="{!account.name}" />
-                </apex:column>
-
-                <apex:column>
-                    <apex:facet name="header">Owner</apex:facet>
-                    <apex:facet name="footer">column footer</apex:facet>
-                    <apex:outputText value="{!account.owner.name}" />
-                </apex:column>
-            </apex:dataTable>
-        </div>
-    </div>
+    <body>
+        <header>
+            <div class="header-red-line"></div>
+            <div class="header-info"></div>
+        </header>
+        
+    </body>
 </apex:page>
