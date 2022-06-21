@@ -1,4 +1,4 @@
-<apex:page renderAs="pdf" applyBodyTag="false"  standardStylesheets="false" controller="TotalInvoiceController">
+<apex:page renderAs="pdf" applyBodyTag="false" standardStylesheets="false" controller="TotalInvoiceController">
     <head>
         <style type="text/css" media="print">
             @page {
@@ -12,16 +12,16 @@
             }
             body {
                 font-family: sans-serif;
-                font-size: 14px;
+                font-size: 12px;
             }
             /*================ HEADER STYLES=============== */
             .header-red-line {
-                background-color: #FF5721;
+                background-color: #ff5721;
                 height: 20px;
                 width: 100%;
             }
             .header-info {
-                background: #F3F3F3;
+                background: #f3f3f3;
                 height: 200px;
                 padding: 0 0 10px 0;
             }
@@ -39,7 +39,7 @@
             }
             .td-invoice {
                 font-size: 20px;
-                color: #7F7F7F;
+                color: #7f7f7f;
                 align: right;
             }
             .date-invoiceNum-block {
@@ -49,13 +49,13 @@
                 position: absolute;
                 width: 125px;
                 font-weight: bold;
-                color: #000;
+                color: #1F3764;
                 padding: 5px 0;
                 text-align: center;
                 float: right;
-                border-bottom: 1px solid #C5C5C5;
+                border-bottom: 1.5px solid #c5c5c5;
             }
-            .date-invoiceNum-block__date{
+            .date-invoiceNum-block__date {
                 right: 30px;
             }
             .date-invoiceNum-block__invoiceNum {
@@ -66,11 +66,27 @@
 
             /* =========CONTENT STYLES============= */
 
+            .content {
+                padding: 50px 30px 0px;
+            }
+            .contact-name {
+                padding: 5px 0 0 0;
+            }
+            .content p {
+                line-height: 25px;
+            }
+            .bill-title {
+                text-transform: uppercase;
+                border-bottom: 1.5px solid #c5c5c5;
+                color: #1F3764;
+                font-weight: bold;
+                line-height: 20px;
+            }
             /* ==================================== */
 
             /* ==========FOOTER STYLES============= */
             .footer-company-name {
-                background-color: #FF5721;
+                background-color: #ff5721;
                 height: 20px;
                 text-align: center;
                 font-size: 14px;
@@ -78,7 +94,6 @@
                 color: #fff;
             }
             /* ==================================== */
-            
         </style>
     </head>
 
@@ -100,9 +115,7 @@
                             </div>
                             <div>Opportunity Owner Name</div>
                         </td>
-                        <td class="td-invoice">
-                            INVOICE
-                        </td> 
+                        <td class="td-invoice">INVOICE</td>
                     </tr>
                 </table>
 
@@ -114,12 +127,18 @@
         </header>
 
         <div class="content">
-
+            
+                    <p class="bill-title">BILL TO</p>
+                    <p class="contact-name">{!contact.Name}</p>
+                    <p class="client-company-name">Client Company Name</p>
+                    <p class="contact-phone">{!contact.Phone}</p>
+                    <p class="contact-email">{!contact.Email}</p>
+                    
+               
         </div>
 
         <footer>
             <div class="footer-company-name">{!$Organization.Name}</div>
         </footer>
-        
     </body>
 </apex:page>
