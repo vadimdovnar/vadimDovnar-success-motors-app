@@ -1,13 +1,18 @@
-<apex:page renderAs="pdf" applyBodyTag="false"  standardStylesheets="false" standardController="Account">
+<apex:page renderAs="pdf" applyBodyTag="false"  standardStylesheets="false" controller="TotalInvoiceController">
     <head>
         <style type="text/css" media="print">
             @page {
                 width: 100%;
-                padding: 80px 0 0 0;
+                padding: 80px 10px 0 10px;
+                margin: 0;
+            }
+            * {
+                padding: 0;
                 margin: 0;
             }
             body {
                 font-family: sans-serif;
+                font-size: 14px;
             }
             .header-red-line {
                 background-color: #FF5721;
@@ -17,15 +22,88 @@
             .header-info {
                 background: #F3F3F3;
                 height: 200px;
+                padding: 0 0 10px 0;
             }
+            .company-logo {
+                height: 65px;
+                width: 65px;
+            }
+            .company-name {
+                font-size: 18px;
+            }
+            .table-header {
+                width: 100%;
+                padding: 35px 0 0 35px;
+                margin: 0 0 10px 0;
+            }
+            .td-invoice {
+                font-size: 20px;
+                color: #7F7F7F;
+                align: right;
+            }
+            .date-invoiceNum-block {
+                position: relative;
+            }
+            .date-invoiceNum-block p {
+                position: absolute;
+                width: 125px;
+                font-weight: bold;
+                color: #000;
+                padding: 5px 0;
+                text-align: center;
+                float: right;
+                border-bottom: 1px solid #C5C5C5;
+            }
+            .date-invoiceNum-block__date{
+                right: 30px;
+            }
+            .date-invoiceNum-block__invoiceNum {
+                top: 50px;
+                right: 30px;
+            }
+            
         </style>
     </head>
 
     <body>
         <header>
             <div class="header-red-line"></div>
-            <div class="header-info"></div>
+            <div class="header-info">
+                <table class="table-header">
+                    <tr>
+                        <td><apex:image styleClass="company-logo" value="{!$Resource.CompanyLogo}" /></td>
+                        <td class="td-company-info">
+                            <div class="company-name">{!$Organization.Name}</div>
+                            <div class="address">
+                                <span>{!$Organization.Street}</span>
+                                <span>{!$Organization.City}</span>
+                                <span>{!$Organization.State}</span>
+                                <span>{!$Organization.PostalCode}</span>
+                                <span>{!$Organization.Country}</span>
+                            </div>
+                            <div>Opportunity Owner Name</div>
+                        </td>
+                        <td class="td-invoice">
+                            INVOICE
+                        </td> 
+                    </tr>
+                </table>
+
+                <div class="date-invoiceNum-block">
+                    <p class="date-invoiceNum-block__date">{!currentDate}</p>
+                    <p class="date-invoiceNum-block__invoiceNum">0001</p>
+                </div>
+            </div>
         </header>
+
+        <div class="content">
+
+        </div>
+
+        <footer>
+
+
+        </footer>
         
     </body>
 </apex:page>
