@@ -1,4 +1,4 @@
-<apex:page renderAs="pdf" applyBodyTag="false" standardStylesheets="false" controller="TotalInvoiceController">
+<apex:page renderAs="pdf" applyBodyTag="false" standardStylesheets="true" controller="TotalInvoiceController">
     <head>
         <style type="text/css" media="print">
             @page {
@@ -49,7 +49,7 @@
                 position: absolute;
                 width: 125px;
                 font-weight: bold;
-                color: #1F3764;
+                color: #1f3764;
                 padding: 5px 0;
                 text-align: center;
                 float: right;
@@ -78,9 +78,62 @@
             .bill-title {
                 text-transform: uppercase;
                 border-bottom: 1.5px solid #c5c5c5;
-                color: #1F3764;
+                color: #1f3764;
                 font-weight: bold;
                 line-height: 20px;
+            }
+            .bill-to-block {
+                margin-bottom: 35px;
+            }
+            .white {
+                background-color: #fff;
+                height: 20px;
+                text-align: center;
+                border: 1px solid #9F9F9F;
+            }
+            .gray {
+                background-color: #f3f3f3;
+                height: 20px;
+                text-align: center;
+                border: 1px solid 
+            }
+            .tableClass {
+                width: 100%;
+                border-bottom: 1px solid #9F9F9F;
+                /* border-collapse: collapse; */
+            }
+            .header-table {
+                background-color: #ff5721;
+                border: 1px solid #ff5721;
+                border-bottom: 1px solid #9F9F9F;
+                text-align: center;
+                text-transform: uppercase;
+                color: #fff;
+                height: 25px;
+            }
+            .table-rows {
+                height: 20px;
+                text-align: center;
+            }
+            .product-name-column {
+                text-align: left;
+                border-right: 1px solid #9F9F9F;
+                border-left: 1px solid #9F9F9F;
+            }
+            .quontity-column {
+                text-align: center;
+                border-right: 1px solid #9F9F9F;
+            }
+            .unit-price-column {
+                text-align: right;
+                border-right: 1px solid #9F9F9F;
+            }
+            .total-column {
+                text-align: right;
+                border-right: 1px solid #9F9F9F;
+            }
+            .column {
+                padding: 0 5px 0 5px;
             }
             /* ==================================== */
 
@@ -95,10 +148,11 @@
             }
             /* ==================================== */
         </style>
+        
     </head>
 
     <body>
-        <header>
+        <div class="header">
             <div class="header-red-line"></div>
             <div class="header-info">
                 <table class="table-header">
@@ -124,21 +178,44 @@
                     <p class="date-invoiceNum-block__invoiceNum">0001</p>
                 </div>
             </div>
-        </header>
-
-        <div class="content">
-            
-                    <p class="bill-title">BILL TO</p>
-                    <p class="contact-name">{!contact.Name}</p>
-                    <p class="client-company-name">Client Company Name</p>
-                    <p class="contact-phone">{!contact.Phone}</p>
-                    <p class="contact-email">{!contact.Email}</p>
-                    
-               
         </div>
 
-        <footer>
+        <div class="content">
+            <div class="bill-to-block">
+                <p class="bill-title">BILL TO</p>
+                <p class="contact-name">Name: {!contact.Name}</p>
+                <p class="client-company-name">Company Name: Client Company Name</p>
+                <p class="contact-phone">Phone: {!contact.Phone}</p>
+                <p class="contact-email">Email: {!contact.Email}</p>
+            </div>
+
+            <apex:dataTable value="{!oppLineItems}" rows="11" id="theTable" var="opp" rowClasses="white,gray" styleClass="tableClass">
+
+                <apex:column styleClass="product-name-column column"  headerClass="header-table" headerValue="Product Name">
+                    <apex:outputText value="{!opp.ProductCode}" />
+                </apex:column>
+
+                <apex:column styleClass="quontity-column column"  headerClass="header-table" headerValue="QTY">
+                    <apex:outputText value="{!opp.Quantity}" />
+                </apex:column>
+
+                <apex:column styleClass="unit-price-column column"  headerClass="header-table" headerValue="Unit Price">
+                    <apex:outputText value="{!opp.UnitPrice}" />
+                    <p>Balance Due</p>
+                </apex:column>
+
+                <apex:column styleClass="total-column column"  headerClass="header-table" headerValue="Total">
+                    <apex:outputText value="{!opp.TotalPrice}" />
+                </apex:column>
+
+            </apex:dataTable>
+
+        </div>
+
+        <div class="footer">
             <div class="footer-company-name">{!$Organization.Name}</div>
-        </footer>
+        </div>
+        
     </body>
+
 </apex:page>
