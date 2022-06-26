@@ -1,8 +1,13 @@
 <!-- <apex:page renderAs="pdf"  showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="true" controller="TotalInvoiceController"> -->
-<apex:page controller="TotalInvoiceController" cache="false" showHeader="false" sidebar="false" renderas="pdf" applyHtmlTag="false"
+<apex:page 
+    controller="TotalInvoiceController" 
+    cache="false" 
+    showHeader="false" 
+    sidebar="false" 
+    renderas="pdf" 
+    applyHtmlTag="false"
     applyBodyTag="false">
-    <html>
-
+    
     <head>
         <style type="text/css" media="print">
             @page {
@@ -314,9 +319,7 @@
                 </apex:column>
             </apex:dataTable>
         </div>
-
         
     </body>
 
-    </html>
 </apex:page>
