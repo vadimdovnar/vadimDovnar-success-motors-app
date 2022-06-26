@@ -11,8 +11,11 @@ public with sharing class TotalInvoiceController {
         return [SELECT Id, Name, Phone, Email FROM Contact WHERE Id = '0035i000005u80pAAA'];
     }
 
-    public List<OpportunityLineItem> getOppLineItems() {
-        List<OpportunityLineItem> p = [SELECT Id, ProductCode, Quantity, UnitPrice, TotalPrice FROM OpportunityLineItem];
+    public List<Account> getOppLineItems() {
+        List<Account> p = [SELECT Id, Name, Phone, Type FROM Account];
         return p;
     } 
+    public Integer getInt() {
+        return 100;
+    }
 }
