@@ -10,10 +10,10 @@
                     content: element(header);
                 }
 
-                @bottom-left {
+                @bottom-center {
                     content: element(footer);
                 }
-                margin: 24em 0 0;
+                margin: 24em 0 11em 0;
                 width: 100%;
             }
 
@@ -31,11 +31,25 @@
                 -fs-table-paginate: paginate;
             }
 
+            .countPage {
+                position: absolute;
+                color: #1f3764;
+                font-style: italic;
+                font-weight: bold;
+                right: 10px;
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+            .pagecount:before {
+                content: counter(pages);
+            }
+
             /*================ HEADER STYLES=============== */
             .header {
                 padding: 10px;
                 position: running(header);
-                page-break-inside: avoid;
             }
 
             .header__red-line {
@@ -191,7 +205,7 @@
                 text-align: center;
                 font-size: 18px;
                 font-weight: bold;
-                margin: 0 0 0 460px;
+                margin: 0 0 0 472px;
             }
 
                     .tableBalance__title {
@@ -210,8 +224,7 @@
 
             /* ==========FOOTER STYLES============= */
             .footer {
-                display: block;
-                padding: 5px;
+                padding: 0 10px;
                 position: running(footer);
             }
 
@@ -229,6 +242,7 @@
     </head>
 
     <body>
+        <div class="countPage">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
         <div class="header">
             <div class="header__red-line"></div>
             <div class="header__company-info">
@@ -267,6 +281,10 @@
             <p class="bill-to__client-email bill-info"><i>Email:</i> {!contact.Email}</p>
         </div>
 
+        <div class="footer">
+            <div class="footer__company-name">{!$Organization.Name}</div>
+        </div>
+
         <div class="content">
             <apex:dataTable value="{!oppLineItems}" id="theTable" var="opp" rowClasses="tableProducts__row_white, tableProducts__row_gray" styleClass="content__tableProducts tableProducts__tableHeader_repeate">
                 <apex:column styleClass="tableProducts__product-name column" headerClass="tableProducts__header-table" headerValue="Product Name">
@@ -297,9 +315,7 @@
             </apex:dataTable>
         </div>
 
-        <div class="footer">
-            <div class="footer__company-name">{!$Organization.Name}</div>
-        </div>
+        
     </body>
 
     </html>

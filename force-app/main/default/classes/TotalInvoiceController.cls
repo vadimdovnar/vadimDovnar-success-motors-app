@@ -12,7 +12,7 @@ public with sharing class TotalInvoiceController {
     }
 
     public List<Account> getOppLineItems() {
-        List<Account> p = [SELECT Id, Name, Phone, Type FROM Account];
+        List<Account> p = [SELECT Id, Name, Phone, Type FROM Account LIMIT 10];
         return p;
     } 
     public Integer getInt() {
