@@ -1,4 +1,3 @@
-<!-- <apex:page renderAs="pdf"  showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="true" controller="TotalInvoiceController"> -->
 <apex:page 
     controller="TotalInvoiceController" 
     cache="false" 
@@ -247,7 +246,11 @@
     </head>
 
     <body>
+
+        <!-- pagination block -->
         <div class="countPage">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+
+        <!-- page header -->
         <div class="header">
             <div class="header__red-line"></div>
             <div class="header__company-info">
@@ -278,6 +281,7 @@
             </div>
         </div>
 
+        <!-- client account block -->
         <div class="bill-to">
             <p class="bill-to__title">BILL TO</p>
             <p class="bill-to__client-name bill-info"><i>Name:</i> {!contact.Name}</p>
@@ -286,11 +290,14 @@
             <p class="bill-to__client-email bill-info"><i>Email:</i> {!contact.Email}</p>
         </div>
 
+        <!-- footer block -->
         <div class="footer">
             <div class="footer__company-name">{!$Organization.Name}</div>
         </div>
 
         <div class="content">
+
+            <!-- product table -->
             <apex:dataTable value="{!oppLineItems}" id="theTable" var="opp" rowClasses="tableProducts__row_white, tableProducts__row_gray" styleClass="content__tableProducts tableProducts__tableHeader_repeate">
                 <apex:column styleClass="tableProducts__product-name column" headerClass="tableProducts__header-table" headerValue="Product Name">
                     <apex:outputText value="{!opp.Id}" />
