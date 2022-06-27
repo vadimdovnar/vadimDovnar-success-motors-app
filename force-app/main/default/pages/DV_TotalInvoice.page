@@ -9,6 +9,9 @@
     
     <head>
         <style type="text/css" media="print">
+
+            /* if the table size exceeds the size of one page,
+            this property allows you to display the header and footer on subsequent pages */
             @page {
                 @top-center {
                     content: element(header);
@@ -31,6 +34,7 @@
                 font-size: 12px;
             }
 
+            /* allows you to save the table header when it is transferred to subsequent pages */
             .tableProducts__tableHeader_repeate {
                 -fs-table-paginate: paginate;
             }
