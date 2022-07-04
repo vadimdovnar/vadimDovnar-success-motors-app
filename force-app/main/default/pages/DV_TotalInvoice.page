@@ -273,7 +273,11 @@
                                 <span>{!$Organization.PostalCode}</span>
                                 <span>{!$Organization.Country}</span>
                             </div>
-                            <div>Opportunity Owner Name</div>
+                            <div>
+                                <apex:repeat value="{!opportunity}" var="opp">
+                                    <apex:outputText value="{!opp.Owner.Name}" />
+                                </apex:repeat>
+                            </div>
                         </td>
                         <td class="company-info__invoice">INVOICE</td>
                     </tr>
@@ -281,7 +285,11 @@
 
                 <div class="header__date-invoiceNum">
                     <p class="date-invoiceNum__date">{!DAY(TODAY())}-{!MONTH(TODAY())}-{!YEAR(TODAY())}</p>
-                    <p class="date-invoiceNum__invoiceNum">0001</p>
+                    <p class="date-invoiceNum__invoiceNum">
+                        <apex:repeat value="{!opportunity}" var="opp">
+                            <apex:outputText value="{!opp.Invoice_Number__c}" />
+                        </apex:repeat>
+                    </p>
                 </div>
             </div>
         </div>
@@ -289,10 +297,24 @@
         <!-- client account block -->
         <div class="bill-to">
             <p class="bill-to__title">BILL TO</p>
-            <p class="bill-to__client-name bill-info"><i>Name:</i> {!contact.Name}</p>
-            <p class="bill-to__client-company-name bill-info"><i>Company Name:</i> Client Company Name</p>
-            <p class="bill-to__client-phone bill-info"><i>Phone:</i> {!contact.Phone}</p>
-            <p class="bill-to__client-email bill-info"><i>Email:</i> {!contact.Email}</p>
+                <apex:repeat value="{!contact}" var="cont">
+                    <p class="bill-to__client-name bill-info">
+                        <i>Name:</i> 
+                        <apex:outputText value="{!cont.Contact.Name}" />
+                    </p>
+                    <p class="bill-to__client-company-name bill-info">
+                        <i>Company Name:</i> 
+                        <apex:outputText value="{!cont.Contact.Account.Name}" />
+                    </p>
+                    <p class="bill-to__client-phone bill-info">
+                        <i>Phone:</i> 
+                        <apex:outputText value="{!cont.Contact.Phone}" />
+                    </p>
+                    <p class="bill-to__client-email bill-info">
+                        <i>Email:</i> 
+                        <apex:outputText value="{!cont.Contact.Email}" />
+                    </p>
+                </apex:repeat>
         </div>
 
         <!-- footer block -->
@@ -303,31 +325,31 @@
         <div class="content">
 
             <!-- product table -->
-            <apex:dataTable value="{!oppLineItems}" id="theTable" var="opp" rowClasses="tableProducts__row_white, tableProducts__row_gray" styleClass="content__tableProducts tableProducts__tableHeader_repeate">
+            <apex:dataTable value="{!products}" id="theTable" var="product" rowClasses="tableProducts__row_white, tableProducts__row_gray" styleClass="content__tableProducts tableProducts__tableHeader_repeate">
                 <apex:column styleClass="tableProducts__product-name column" headerClass="tableProducts__header-table" headerValue="Product Name">
-                    <apex:outputText value="{!opp.Id}" />
+                    <apex:outputText value="{!product.Product2.Name}" />
                 </apex:column>
 
                 <apex:column styleClass="tableProducts__quontity column" headerClass="tableProducts__header-table" headerValue="QTY">
-                    <apex:outputText value="{!opp.Name}" />
+                    <apex:outputText value="{!product.Quantity}" />
                 </apex:column>
 
                 <apex:column styleClass="tableProducts__unit-price column" headerClass="tableProducts__header-table" headerValue="Unit Price">
-                    <apex:outputText value="{!opp.Phone}" />
+                    <apex:outputText value="{!product.UnitPrice}" />
                 </apex:column>
 
                 <apex:column styleClass="tableProducts__total column" headerClass="tableProducts__header-table" headerValue="Total">
-                    <apex:outputText value="{!opp.Type}" />
+                    <apex:outputText value="{!product.TotalPrice}" />
                 </apex:column>
             </apex:dataTable>
 
-            <apex:dataTable value="{!int}" var="i" styleClass="content__tableBalance">
+            <apex:dataTable value="{!opportunity}" var="opp" styleClass="content__tableBalance">
                 <apex:column styleClass="tableBalance__title">
                     <apex:outputText value="Balance Due" />
                 </apex:column>
 
                 <apex:column styleClass="tableBalance__total">
-                    <apex:outputText value="$104,000.00" />
+                    <apex:outputText value="{!opp.Amount}" />
                 </apex:column>
             </apex:dataTable>
         </div>
