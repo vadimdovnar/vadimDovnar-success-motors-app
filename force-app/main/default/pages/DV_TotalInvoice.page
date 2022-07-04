@@ -1,5 +1,5 @@
 <apex:page 
-    controller="TotalInvoiceController" 
+    controller="DV_TotalInvoiceController" 
     cache="false" 
     showHeader="false" 
     sidebar="false" 
@@ -20,6 +20,7 @@
                 @bottom-center {
                     content: element(footer);
                 }
+                size: A4;
                 margin: 24em 0 11em 0;
                 width: 100%;
             }

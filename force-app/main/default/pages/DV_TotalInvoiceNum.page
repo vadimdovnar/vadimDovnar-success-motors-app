@@ -1,0 +1,3 @@
+<apex:page standardController="Opportunity" extensions="DV_TotalInvoiceNumController" action="{!addPage}">
+
+</apex:page>

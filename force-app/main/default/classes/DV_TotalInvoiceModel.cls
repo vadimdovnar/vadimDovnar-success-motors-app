@@ -1,5 +1,8 @@
-public with sharing class TotalInvoiceModel {
-    
+public with sharing class DV_TotalInvoiceModel {
+    public DV_TotalInvoiceModel() {
+
+    }
+
     public static Opportunity getOpportunityById( String oppId ) {
         return [SELECT Invoice_Number__c, Owner.Name, Amount 
                 FROM Opportunity 
