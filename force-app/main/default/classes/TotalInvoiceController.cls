@@ -4,11 +4,16 @@ public with sharing class TotalInvoiceController {
         
     }
 
-    public Opportunity getOpportunity() {
+    private String opportunityId = Apexpages.currentPage().getParameters().get('opportunity');
 
-        String opportunityId = Apexpages.currentPage().getParameters().get('opportunity');
+    public Opportunity getOpportunity() {
         Opportunity opportunity = TotalInvoiceModel.getOpportunityById(opportunityId);
         return opportunity;
+    }
+
+    public OpportunityContactRole getContact() {
+        OpportunityContactRole contact = TotalInvoiceModel.getContactById(opportunityId);
+        return contact;
     }
 
     // public String getCurrentDate() {
