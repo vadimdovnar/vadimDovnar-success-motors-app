@@ -16,6 +16,22 @@ public with sharing class TotalInvoiceController {
         return contact;
     }
 
+    public List<OpportunityLineItem> getProducts() {
+        List<OpportunityLineItem> products = TotalInvoiceModel.getProductsById(opportunityId);
+        return products;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    
     // public String getCurrentDate() {
     //     return Date.today().format();
     // }
