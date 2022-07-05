@@ -12,12 +12,33 @@ public with sharing class DV_TotalInvoiceNumController {
         invoiceNumber = duplicateOpportunity.Invoice_Number__c;
     }
 
-    public void addPage() {
+    public Pagereference addPage() {
         Blob pdf;
         Pagereference totalInvoicePage = Page.DV_TotalInvoice;
         totalInvoicePage.getParameters().put('opportunity', oppId);
         pdf = totalInvoicePage.getContent();
         
         List<ContentVersion> contentList = DV_TotalInvoiceNumModel.getContentByInvoiceNum( invoiceNumber );
+        ContentVersion contVers = new ContentVersion();
+        
+        if (contentList.size() > 0) {
+            Id contDocId = DV_TotalInvoiceNumModel.getIdContentByInvoiceNum( invoiceNumber );
+            contVers.ContentDocumentId = contDocId;
+            DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
+            insert contVers;
+        } else {
+            DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
+            insert contVers;
+
+            Id contDocId = DV_TotalInvoiceNumModel.getIdContentByContentVersion( contVers );
+            ContentDocumentLink contDocLink = new ContentDocumentLink();
+            contDocLink.ContentDocumentId = contDocId;
+            contDocLink.ShareType = 'V';
+            contDocLink.LinkedEntityId = oppId;
+            insert contDocLink;
+        }
+        PageReference pageRef = new ApexPages.StandardController(currentOpportunity).view();
+        pageRef.setRedirect(true);
+        return pageRef;
     }
 }

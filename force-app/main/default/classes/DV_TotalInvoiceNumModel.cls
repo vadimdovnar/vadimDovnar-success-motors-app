@@ -11,4 +11,16 @@ public with sharing class DV_TotalInvoiceNumModel {
                 FROM ContentVersion 
                 WHERE Title=:invNum];
     }
+
+    public static Id getIdContentByInvoiceNum( String invNum ) {
+        return [SELECT ContentDocumentId, Title 
+                FROM ContentVersion 
+                WHERE Title=:invNum].ContentDocumentId;
+    }
+
+    public static Id getIdContentByContentVersion( ContentVersion contVers ) {
+        return [SELECT ContentDocumentId 
+                FROM ContentVersion 
+                WHERE Id = :contVers.Id].ContentDocumentId;
+    }
 }
