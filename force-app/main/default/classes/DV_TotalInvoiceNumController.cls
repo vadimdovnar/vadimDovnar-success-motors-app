@@ -13,7 +13,11 @@ public with sharing class DV_TotalInvoiceNumController {
     }
 
     public void addPage() {
+        Blob pdf;
         Pagereference totalInvoicePage = Page.DV_TotalInvoice;
-        System.debug(totalInvoicePage.getParameters());
+        totalInvoicePage.getParameters().put('opportunity', oppId);
+        pdf = totalInvoicePage.getContent();
+        
+        List<ContentVersion> contentList = DV_TotalInvoiceNumModel.getContentByInvoiceNum( invoiceNumber );
     }
 }
