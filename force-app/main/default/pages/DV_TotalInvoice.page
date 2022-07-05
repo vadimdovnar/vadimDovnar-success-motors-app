@@ -140,6 +140,10 @@
                 padding: 5px 0 5px 0;
             }
 
+            .bill-info i {
+                margin-right: 5px;
+            }
+
             /* =========CONTENT STYLES============= */
             .content {
                 position: sticky;
@@ -226,7 +230,7 @@
 
                     .tableBalance__total {
                         width: 120px;
-                        padding: 0 5px;
+                        padding: 0 10px;
                         background: #f4cccd;
                         border-bottom: 1px solid #9f9f9f;
                     }
@@ -343,13 +347,14 @@
                 </apex:column>
             </apex:dataTable>
 
+            <!-- Balance table -->
             <apex:dataTable value="{!opportunity}" var="opp" styleClass="content__tableBalance">
                 <apex:column styleClass="tableBalance__title">
                     <apex:outputText value="Balance Due" />
                 </apex:column>
 
                 <apex:column styleClass="tableBalance__total">
-                    <apex:outputText value="{!opp.Amount}" />
+                    <apex:outputText value="$ {!opp.Amount}" />
                 </apex:column>
             </apex:dataTable>
         </div>
