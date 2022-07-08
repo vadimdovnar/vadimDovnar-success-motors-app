@@ -1,3 +1,19 @@
 <template>
-    
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" disabled="false" label="Subject" value={tempSubj} ></lightning-input>
+    </div>
+    <div class="slds-p-around_medium lgc-bg row">
+        <h2 class="header">Message</h2>
+        <lightning-textarea name="input1" ></lightning-textarea>
+    </div>
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" disabled="false" label="Client's Name"  ></lightning-input>
+    </div>
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" disabled="false" label="Client's Email"  ></lightning-input>
+    </div>
+    <div class="slds-m-top_small slds-m-bottom_medium">
+        <lightning-button label="View Invoice" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button label="Send" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </div>
 </template>
