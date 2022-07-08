@@ -1,11 +1,7 @@
 public with sharing class DV_EmailForClientController {
-    
     @AuraEnabled
-    public static string sendEmail(){
-        try {
-            
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+    public static EmailTemplate getEmailTemplates(){
+        String tempName = 'Email Template for Clients';
+        return DV_EmailForClientModel.getEmailTemplateId(tempName);
     }
 }
