@@ -1,30 +1,30 @@
-import { LightningElement, track} from 'lwc';
-import getEmailTemplates from '@salesforce/apex/DV_EmailForClientController.getEmailTemplates';
+import { LightningElement, wire, api, track} from 'lwc';
+
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+// import getEmailTemplates from '@salesforce/apex/DV_EmailForClientController.getEmailTemplates';
+import OPP_INV_NUM from '@salesforce/schema/Opportunity.Invoice_Number__c';
+import CONTACT_ID from '@salesforce/schema/Opportunity.ContactId';
+
+
+
+
+
  
 export default class DV_EmailForClient extends LightningElement {
+    @api recordId;
 
-    @track template = {};
+    @wire(getRecord, { recordId: '$recordId', fields: [OPP_INV_NUM, CONTACT_ID] })
+    opportunity;
 
-    async connectedCallback() {
-        this.template = await getEmailTemplates();
+    get invNumber() {
+        return getFieldValue(this.opportunity.data, OPP_INV_NUM);
     }
 
-    get tempSubj() {
-        return this.template.Subject;
-    }
-
-    get tempBody() {
-        return this.template.Body;
-    }
-
-    get contactName() {
-        return this.template.Subject;
-    }
-
-    get contactEmail() {
-        return this.template.Subject;
+    get contId() {
+        return getFieldValue(this.opportunity.data, CONTACT_ID);
     }
 
     
-}
+    
 
+}

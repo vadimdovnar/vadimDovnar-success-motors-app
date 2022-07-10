@@ -7,15 +7,4 @@ public with sharing class DV_EmailForClientModel {
                 WITH SECURITY_ENFORCED 
                 LIMIT 1]; 
     }
-    
-    // public static EmailTemplate getEmailTemplatesById( String tempId ) {
-    //     return [SELECT Id, Name, Subject, Body, HtmlValue
-    //             FROM EmailTemplate
-    //             WHERE Id =: tempId
-    //             WITH SECURITY_ENFORCED
-    //             ];
-    // }
-
 }
-
-// Email Template for Clients
