@@ -1,0 +1,20 @@
+<template>
+    <div class="slds-m-top_small slds-m-bottom_medium">
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" disabled="true" label="Subject" value={invoiceNumber}></lightning-input>
+        </div>
+        <div class="slds-p-around_medium lgc-bg row min-height">
+            <lightning-textarea name="input1" label="Email Body" value={emailBody}></lightning-textarea>
+            <div class="slds-form-element__help hide slds-required"><abbr class="slds-required" title="required">* </abbr>Enter a value.</div>
+        </div>
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" disabled="true" label="Client's Name" value={contactName}></lightning-input>
+        </div>
+        <div class="slds-p-around_medium lgc-bg">
+            <lightning-input type="text" disabled="true" label="Client's Email" value={contactEmail}></lightning-input>
+        </div>
+
+        <lightning-button label="View Invoice" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button label="Send" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </div>
+</template>

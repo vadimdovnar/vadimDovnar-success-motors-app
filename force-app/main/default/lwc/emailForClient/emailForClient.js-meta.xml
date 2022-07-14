@@ -11,3 +11,5 @@
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
+
+<!-- property наружу -->
