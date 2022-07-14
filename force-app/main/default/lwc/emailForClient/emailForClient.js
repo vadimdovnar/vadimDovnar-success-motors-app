@@ -1,8 +1,10 @@
 import { LightningElement, api, wire } from 'lwc';
-import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
+import { NavigationMixin } from 'lightning/navigation';
 
 import getOppContRoleByOppId from '@salesforce/apex/DV_EmailForClientController.getOpportunityContRole';
 import getEmailTemplate from '@salesforce/apex/DV_EmailForClientController.getEmailTemplate';
+import getInvoicePDFInfo from '@salesforce/apex/DV_EmailForClientController.getInvoicePDFInfo';
 
 
 
@@ -10,7 +12,7 @@ import OPPORTUNITY_INV_NUM from '@salesforce/schema/Opportunity.Invoice_Number__
 import CONTACT_ID from '@salesforce/schema/Opportunity.ContactId'
 
 
-export default class EmailForClient extends LightningElement {
+export default class EmailForClient extends NavigationMixin(LightningElement) {
 
     @api recordId;
     
@@ -22,6 +24,10 @@ export default class EmailForClient extends LightningElement {
 
     emailTemplate;
     emailTemplateBody;
+
+    invoicePDFInfo;
+    invoicePDFId;
+
     
 
     timeout = null;
@@ -72,13 +78,35 @@ export default class EmailForClient extends LightningElement {
             this.emailTemplate = await getEmailTemplate();
             this.emailTemplateBody = await this.emailTemplate.Body;
 
+            this.invoicePDFInfo = await getInvoicePDFInfo({ oppId : this.recordId});
+            this.invoicePDFId = await this.invoicePDFInfo.CombinedAttachments[0].Id;
+
         } catch (error) {
             console.log('============ERROR===========',error);
         }
     }
     // =====================================================================
 
-   
-
+    // =============================HANDLERS:===============================
     
+    handleViewInvoicePDF() {
+        this[NavigationMixin.Navigate]({
+          type: 'standard__namedPage',
+          attributes: {
+              pageName: 'filePreview'
+          },
+          state : {
+              selectedRecordId: this.invoicePDFId
+          }
+        })
+    }
+
+    // =============================LIFECYCLE:==============================
+
+    errorCallback(error, stack) {
+        console.error('emailForClient: errorCallback >', error, stack);
+    }
+
+    // =====================================================================
+
 }

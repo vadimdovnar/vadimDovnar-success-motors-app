@@ -15,4 +15,8 @@ public with sharing class DV_EmailForClientModel {
                 WITH SECURITY_ENFORCED 
                 LIMIT 1]; 
     }
+    public static Opportunity getInvoicePDFInfoByOppId( String oppId ) {
+        return [SELECT Id, (SELECT Id, Title FROM CombinedAttachments) FROM Opportunity WHERE Id =: oppId];
+    }
+
 }
