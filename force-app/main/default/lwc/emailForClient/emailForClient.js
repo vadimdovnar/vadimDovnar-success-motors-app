@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import getOppContRoleByOppId from '@salesforce/apex/DV_EmailForClientController.getOpportunityContRole';
 import getEmailTemplate from '@salesforce/apex/DV_EmailForClientController.getEmailTemplate';
@@ -107,6 +108,13 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         this.changedEmailTempBody = e.target.value;
     }
     async handleSendEmail() {
+        const event = new ShowToastEvent({
+            title: 'Email sent successfully',
+            variant: 'success',
+            message:
+                'Contact Email : ' + this.contEmail,
+        });
+        this.dispatchEvent(event);
         await cloneEmailTemplate( { tempApiName : this.DEFAULT_EMAIL_TEMPLATE_API_NAME,
                                     clonedTempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
         await updateEmailTemplateFields( { tempApiName: this.CLONED_EMAIL_TEMPLATE_API_NAME,
@@ -114,10 +122,14 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
                                            changedEmailTempBody : this.changedEmailTempBody || this.defaultEmailTempBody } );
 
         await sendEmail( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME, oppId : this.recordId } );
-        // await deleteClonedEmailTemplate( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
+        await deleteClonedEmailTemplate( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
+        
     }
 
     // =============================LIFECYCLE:==============================
+    connectedCallback() {
+        console.log('COLL', this.recordId);
+    }
     errorCallback(error, stack) {
         console.error('emailForClient: errorCallback >', error, stack);
     }
