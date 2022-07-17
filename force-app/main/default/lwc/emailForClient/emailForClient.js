@@ -4,7 +4,12 @@ import { NavigationMixin } from 'lightning/navigation';
 
 import getOppContRoleByOppId from '@salesforce/apex/DV_EmailForClientController.getOpportunityContRole';
 import getEmailTemplate from '@salesforce/apex/DV_EmailForClientController.getEmailTemplate';
+import deleteClonedEmailTemplate from '@salesforce/apex/DV_EmailForClientController.deleteClonedEmailTemplate';
 import getInvoicePDFInfo from '@salesforce/apex/DV_EmailForClientController.getInvoicePDFInfo';
+import updateEmailTemplateFields from '@salesforce/apex/DV_EmailForClientController.updateEmailTemplateFields';
+// import updateEmailTemplateBody from '@salesforce/apex/DV_EmailForClientController.updateEmailTemplateBody';
+import cloneEmailTemplate from '@salesforce/apex/DV_EmailForClientController.cloneEmailTemplate';
+import sendEmail from '@salesforce/apex/Test.sendEmail';
 
 
 
@@ -19,16 +24,17 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     // variables:
     opportunityContactRole;
     oppInvNumber;
+    emailTemplateSubject;
     contName;
     contEmail;
 
     emailTemplate;
-    emailTemplateBody;
+    defaultEmailTempBody;
+    changedEmailTempBody;
+    changedEmailTempSubject;
 
     invoicePDFInfo;
     invoicePDFId;
-
-    
 
     timeout = null;
 
@@ -44,7 +50,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     }
 
     get emailBody() {
-        return this.emailTemplateBody;
+        return this.defaultEmailTempBody;
     }
     // ===================================================================
 
@@ -54,7 +60,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
      oppContRoleInfo({error, data}) {
          if(error) {
              
-             console.log('============ERROR===========', error);
+             console.log('============WIRE ERROR===========', error);
          } else if(data) { 
              clearTimeout(this.timeout);
              this.timeout = setTimeout(() => {
@@ -75,11 +81,16 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
             this.contName = await this.opportunityContactRole.Contact.Name;
             this.contEmail = await this.opportunityContactRole.Contact.Email;
 
+
             this.emailTemplate = await getEmailTemplate();
-            this.emailTemplateBody = await this.emailTemplate.Body;
+            this.defaultEmailTempBody = await this.emailTemplate.Body;
+            
+
 
             this.invoicePDFInfo = await getInvoicePDFInfo({ oppId : this.recordId});
             this.invoicePDFId = await this.invoicePDFInfo.CombinedAttachments[0].Id;
+
+            console.log('======================', this.recordId);
 
         } catch (error) {
             console.log('============ERROR===========',error);
@@ -100,6 +111,17 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
           }
         })
     }
+    handleChangeEmailTemp(e) {
+        this.changedEmailTempBody = e.target.value;
+    }
+    async handleSendEmail() {
+        await cloneEmailTemplate( );
+        await updateEmailTemplateFields( { oppInvNumber : this.oppInvNumber, changedEmailTempBody : this.changedEmailTempBody || 
+                                                                                                    this.defaultEmailTempBody } );
+        await sendEmail();
+        await deleteClonedEmailTemplate();
+
+    }
 
     // =============================LIFECYCLE:==============================
 
@@ -108,5 +130,6 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     }
 
     // =====================================================================
+
 
 }

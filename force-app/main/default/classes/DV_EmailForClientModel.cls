@@ -1,7 +1,7 @@
 public with sharing class DV_EmailForClientModel {
 
     public static EmailTemplate getEmailTemplateByApiName( String tempApiName ) {
-        return [SELECT Id, Name, Subject, Body, HtmlValue
+        return [SELECT Id, Name, DeveloperName, FolderId, Subject, Body, HtmlValue
                 FROM EmailTemplate  
                 WHERE DeveloperName =: tempApiName
                 WITH SECURITY_ENFORCED 
@@ -9,7 +9,7 @@ public with sharing class DV_EmailForClientModel {
     }
     public static OpportunityContactRole getOppContRoleByOppId( String oppId ) {
         System.debug(oppId);
-        return [SELECT Id, Opportunity.Invoice_Number__c, Contact.Name, Contact.Email
+        return [SELECT Id, Opportunity.Invoice_Number__c, Opportunity.OwnerId, Contact.Name, Contact.FirstName, Contact.LastName, Contact.Email
                 FROM OpportunityContactRole  
                 WHERE OpportunityId =: oppId
                 WITH SECURITY_ENFORCED 

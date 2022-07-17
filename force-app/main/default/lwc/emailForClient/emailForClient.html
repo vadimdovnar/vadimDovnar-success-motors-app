@@ -4,7 +4,7 @@
             <lightning-input type="text" disabled="true" label="Subject" value={invoiceNumber}></lightning-input>
         </div>
         <div class="slds-p-around_medium lgc-bg row min-height">
-            <lightning-textarea name="input1" label="Email Body" value={emailBody}></lightning-textarea>
+            <lightning-textarea name="input1" label="Email Body" value={emailBody} onchange={handleChangeEmailTemp}></lightning-textarea>
             <div class="slds-form-element__help hide slds-required"><abbr class="slds-required" title="required">* </abbr>Enter a value.</div>
         </div>
         <div class="slds-p-around_medium lgc-bg">
@@ -15,6 +15,6 @@
         </div>
 
         <lightning-button  label="View Invoice" title="Non-primary action" onclick={handleViewInvoicePDF} class="slds-m-left_x-small"></lightning-button>
-        <lightning-button  label="Send" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button  label="Send" title="Non-primary action" onclick={handleSendEmail} class="slds-m-left_x-small"></lightning-button>
     </div>
 </template>
