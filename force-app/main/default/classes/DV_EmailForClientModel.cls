@@ -8,8 +8,7 @@ public with sharing class DV_EmailForClientModel {
                 LIMIT 1]; 
     }
     public static OpportunityContactRole getOppContRoleByOppId( String oppId ) {
-        System.debug(oppId);
-        return [SELECT Id, Opportunity.Invoice_Number__c, Opportunity.OwnerId, Contact.Name, Contact.FirstName, Contact.LastName, Contact.Email
+        return [SELECT Id, Opportunity.Invoice_Number__c, Opportunity.OwnerId, ContactId, Contact.Name, Contact.FirstName, Contact.LastName, Contact.Email
                 FROM OpportunityContactRole  
                 WHERE OpportunityId =: oppId
                 WITH SECURITY_ENFORCED 
