@@ -1,7 +1,8 @@
 public with sharing class DV_EmailForClientHandler {
     
     @AuraEnabled
-    public static void sendEmail(String tempApiName, String oppId) {
+    public static Boolean sendEmail(String tempApiName, String oppId) {
+        Boolean isSuccess = true;
         List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
         EmailTemplate temp = DV_EmailForClientController.getClonedEmailTemplate(tempApiName);
         OpportunityContactRole oppContRole = DV_EmailForClientModel.getOppContRoleByOppId(oppId);
@@ -15,9 +16,11 @@ public with sharing class DV_EmailForClientHandler {
             try {
                 Messaging.sendEmail(emailList);
             } catch (Exception e) {
+                isSuccess = false;
                 System.debug('=============================EXCEPTION===================================');
                 System.debug(e.getMessage());
             } 
-        }       
+        }  
+        return isSuccess;     
     }
 }

@@ -2,6 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { CloseActionScreenEvent } from 'lightning/actions';
 
 import getOppContRoleByOppId from '@salesforce/apex/DV_EmailForClientController.getOpportunityContRole';
 import getEmailTemplate from '@salesforce/apex/DV_EmailForClientController.getEmailTemplate';
@@ -10,6 +11,7 @@ import getInvoicePDFInfo from '@salesforce/apex/DV_EmailForClientController.getI
 import updateEmailTemplateFields from '@salesforce/apex/DV_EmailForClientController.updateEmailTemplateFields';
 import cloneEmailTemplate from '@salesforce/apex/DV_EmailForClientController.cloneEmailTemplate';
 import sendEmail from '@salesforce/apex/DV_EmailForClientHandler.sendEmail';
+
 
 
 
@@ -37,6 +39,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     invoicePDFInfo;
     invoicePDFId;
     timeout = null;
+    emailSendingStatus;
 
     // =========================GETTERS/SETTERS:==========================
     get invoiceNumber() {
@@ -115,7 +118,10 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
                                            oppInvNumber : this.oppInvNumber,
                                            changedEmailTempBody : this.changedEmailTempBody || this.defaultEmailTempBody } );
 
-        await sendEmail( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME, oppId : this.recordId } );
+        this.emailSendingStatus = await sendEmail( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME, oppId : this.recordId } );
+
+        await (this.emailSendingStatus) ? this.fireSuccessEvent() : this.fireErrorEvent();
+        await this.closeModalEvent();
         await deleteClonedEmailTemplate( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
         
     }
@@ -127,6 +133,28 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     errorCallback(error, stack) {
         console.error('emailForClient: errorCallback >', error, stack);
     }
+
+    // =====================================================================
+
+    // ==============================EVENTS:================================
+    closeModalEvent() {
+        this.dispatchEvent(new CloseActionScreenEvent());
+    }
+    fireSuccessEvent() {
+        const title = 'Email sent successfully';
+        const variant = 'success';
+        const message = 'Contact Email : ' + this.contEmail
+        const event = new ShowToastEvent({ title, message, variant });
+        this.dispatchEvent(event);
+    }
+    fireErrorEvent() {
+        const title = 'Email not sent';
+        const variant = 'error';
+        const message = 'Contact Email : ' + this.contEmail
+        const event = new ShowToastEvent({ title, message, variant });
+        this.dispatchEvent(event);
+    }
+
 
     // =====================================================================
 

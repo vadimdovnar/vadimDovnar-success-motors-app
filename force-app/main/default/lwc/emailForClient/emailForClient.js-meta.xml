@@ -3,6 +3,9 @@
     <apiVersion>55.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
         <target>lightning__RecordAction</target>
     </targets>
     <targetConfigs>
@@ -11,5 +14,6 @@
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
+
 
 <!-- property наружу -->
