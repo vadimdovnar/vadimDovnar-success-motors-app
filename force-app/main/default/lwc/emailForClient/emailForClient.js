@@ -108,13 +108,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         this.changedEmailTempBody = e.target.value;
     }
     async handleSendEmail() {
-        const event = new ShowToastEvent({
-            title: 'Email sent successfully',
-            variant: 'success',
-            message:
-                'Contact Email : ' + this.contEmail,
-        });
-        this.dispatchEvent(event);
+        
         await cloneEmailTemplate( { tempApiName : this.DEFAULT_EMAIL_TEMPLATE_API_NAME,
                                     clonedTempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
         await updateEmailTemplateFields( { tempApiName: this.CLONED_EMAIL_TEMPLATE_API_NAME,
