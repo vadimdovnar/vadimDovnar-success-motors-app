@@ -8,3 +8,12 @@
 .red-color {
     color: red;
 }
+.exampleHolder{
+    position: relative;
+    display: block;
+    width: 500px;
+    height: 500px;
+}
+.spiner {
+    width: 840px;
+}

@@ -8,7 +8,7 @@ public with sharing class DV_EmailForClientController {
     public static EmailTemplate getClonedEmailTemplate( String tempApiName ){
         return DV_EmailForClientModel.getEmailTemplateByApiName(tempApiName);
     }
-
+    
     @AuraEnabled
     public static void cloneEmailTemplate(String tempApiName, String clonedTempApiName ){
         EmailTemplate defaultEmailTemplate =  DV_EmailForClientModel.getEmailTemplateByApiName(tempApiName);

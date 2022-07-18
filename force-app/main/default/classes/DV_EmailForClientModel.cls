@@ -17,5 +17,8 @@ public with sharing class DV_EmailForClientModel {
     public static Opportunity getInvoicePDFInfoByOppId( String oppId ) {
         return [SELECT Id, (SELECT Id, Title FROM CombinedAttachments) FROM Opportunity WHERE Id =: oppId];
     }
+    public static Blob getContentVersionInvoiceBody( String titleForPDF ) {
+        return [SELECT Id, VersionData FROM ContentVersion WHERE Title =: titleForPDF].VersionData;
+    }
 
 }

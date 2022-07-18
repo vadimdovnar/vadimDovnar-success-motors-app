@@ -1,5 +1,9 @@
 <template>
-    <div class="slds-m-top_small slds-m-bottom_medium">
+    <div if:true={isDataLoading} class="exampleHolder">
+        <lightning-spinner class="spiner" variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+
+    <div if:false={isDataLoading} class="slds-m-top_small slds-m-bottom_medium">
         <div class="slds-p-around_medium lgc-bg">
             <lightning-input type="text" disabled="true" label="Subject" value={invoiceNumber}></lightning-input>
         </div>
@@ -14,7 +18,7 @@
             <lightning-input type="text" disabled="true" label="Client's Email" value={contactEmail}></lightning-input>
         </div>
 
-        <lightning-button  label="View Invoice" title="Non-primary action" onclick={handleViewInvoicePDF} class="slds-m-left_x-small"></lightning-button>
-        <lightning-button  label="Send" title="Non-primary action" onclick={handleSendEmail} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button label="View Invoice" title="Non-primary action" onclick={handleViewInvoicePDF} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button label="Send" title="Non-primary action" onclick={handleSendEmail} class="slds-m-left_x-small"></lightning-button>
     </div>
 </template>

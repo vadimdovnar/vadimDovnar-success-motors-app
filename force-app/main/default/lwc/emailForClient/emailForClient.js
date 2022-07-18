@@ -25,6 +25,8 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     @api recordId;
     
     // variables:
+    isDataLoading = true;
+    count = 0;
     opportunityContactRole;
     oppInvNumber;
     emailTemplateSubject;
@@ -38,7 +40,6 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     changedEmailTempSubject;
     invoicePDFInfo;
     invoicePDFId;
-    timeout = null;
     emailSendingStatus;
 
     // =========================GETTERS/SETTERS:==========================
@@ -88,6 +89,9 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
             this.defaultEmailTempBody = await this.emailTemplate.Body;
             this.invoicePDFInfo = await getInvoicePDFInfo({ oppId : this.recordId});
             this.invoicePDFId = await this.invoicePDFInfo.CombinedAttachments[0].Id;
+            this.isDataLoading = false;
+            
+            
         } catch (error) {
             console.log('============ERROR===========',error);
         }
@@ -111,7 +115,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         this.changedEmailTempBody = e.target.value;
     }
     async handleSendEmail() {
-        
+        this.isDataLoading = true;
         await cloneEmailTemplate( { tempApiName : this.DEFAULT_EMAIL_TEMPLATE_API_NAME,
                                     clonedTempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
         await updateEmailTemplateFields( { tempApiName: this.CLONED_EMAIL_TEMPLATE_API_NAME,
@@ -122,13 +126,18 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
 
         await (this.emailSendingStatus) ? this.fireSuccessEvent() : this.fireErrorEvent();
         await this.closeModalEvent();
+        this.isDataLoading = false;
         await deleteClonedEmailTemplate( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
-        
     }
 
     // =============================LIFECYCLE:==============================
     connectedCallback() {
-        console.log('COLL', this.recordId);
+        console.log('============CONNECTED================');
+    }
+    renderedCallback() {
+        console.log('============RERENDER================', this.count);
+        this.count = this.count + 1;
+        // this.isDataLoading = false;
     }
     errorCallback(error, stack) {
         console.error('emailForClient: errorCallback >', error, stack);
