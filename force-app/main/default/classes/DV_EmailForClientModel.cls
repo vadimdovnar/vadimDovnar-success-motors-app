@@ -11,6 +11,7 @@ public with sharing class DV_EmailForClientModel {
         return [SELECT Id, Opportunity.Invoice_Number__c, Opportunity.OwnerId, ContactId, Contact.Name, Contact.FirstName, Contact.LastName, Contact.Email
                 FROM OpportunityContactRole  
                 WHERE OpportunityId =: oppId
+                AND IsPrimary = true
                 WITH SECURITY_ENFORCED 
                 LIMIT 1]; 
     }

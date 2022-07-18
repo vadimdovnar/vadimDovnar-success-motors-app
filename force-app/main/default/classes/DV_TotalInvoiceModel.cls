@@ -9,7 +9,7 @@ public with sharing class DV_TotalInvoiceModel {
     public static List<OpportunityContactRole> getContactById( String oppId ) {
         return [SELECT Contact.Name, Contact.Phone, Contact.Account.Name, Contact.Email 
                 FROM OpportunityContactRole 
-                WHERE Opportunity.Id=:oppId];
+                WHERE Opportunity.Id=:oppId AND IsPrimary = true];
     }
 
     public static List<OpportunityLineItem> getProductsById( String oppId ) {
