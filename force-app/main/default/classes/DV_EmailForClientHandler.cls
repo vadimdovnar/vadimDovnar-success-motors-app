@@ -12,6 +12,7 @@ public with sharing class DV_EmailForClientHandler {
         Messaging.EmailFileAttachment emailFileAttachment = new Messaging.EmailFileAttachment();
 
         email.setTemplateId(temp.Id);
+        email.setReplyTo('opportunity_email_service@k-1c7683zk1vu7fldjivnnvyvnp8hwt0vh6eh2zszolbbsdlzwtu.5i-1x5d4eai.ap26.apex.salesforce.com');
         email.setTargetObjectId(oppContRole.ContactId);
         email.setFileAttachments( new Messaging.EmailFileAttachment[] {emailFileAttachment} );
         
