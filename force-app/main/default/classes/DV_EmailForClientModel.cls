@@ -1,7 +1,7 @@
 public with sharing class DV_EmailForClientModel {
 
     public static EmailTemplate getEmailTemplateByApiName( String tempApiName ) {
-        return [SELECT Id, Name, DeveloperName, FolderId, Subject, Body, HtmlValue
+        return [SELECT Id, Name, DeveloperName, FolderId, Subject, Body
                 FROM EmailTemplate  
                 WHERE DeveloperName =: tempApiName
                 WITH SECURITY_ENFORCED 

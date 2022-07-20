@@ -41,6 +41,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     invoicePDFInfo;
     invoicePDFId;
     emailSendingStatus;
+    timeout = null;
 
     // =========================GETTERS/SETTERS:==========================
     get invoiceNumber() {

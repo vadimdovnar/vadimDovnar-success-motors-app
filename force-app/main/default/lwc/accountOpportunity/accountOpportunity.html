@@ -1,0 +1,40 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-label="Example table of Opportunities with no row hovers">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">Opportunity Name</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Stage">Created Date</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Close Date">Close Date</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Amount">Amount</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={opportunities} for:item="opp">
+                <tr class="slds-hint-parent" key={opp.Id}>
+                    <th data-label="Opportunity Name" scope="row">
+                        <div class="slds-truncate">
+                            <a data-id={opp.Id} onclick={showOpportunity}>{opp.Name}</a>
+                        </div>
+                    </th>
+                    <td data-label="Created Date">
+                        <div class="slds-truncate">{opp.CreatedDate}</div>
+                    </td>
+                    <td data-label="Close Date">
+                        <div class="slds-truncate">{opp.CloseDate}</div>
+                    </td>
+                    <td data-label="Amount">
+                        <div class="slds-truncate">{opp.Amount}</div>
+                    </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>
