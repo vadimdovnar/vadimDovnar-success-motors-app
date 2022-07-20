@@ -1,5 +1,5 @@
 <template>
-    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" aria-label="Example table of Opportunities with no row hovers">
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped border" aria-label="Example table of Opportunities with no row hovers">
         <thead>
             <tr class="slds-line-height_reset">
                 <th class="" scope="col">
@@ -21,7 +21,7 @@
                 <tr class="slds-hint-parent" key={opp.Id}>
                     <th data-label="Opportunity Name" scope="row">
                         <div class="slds-truncate">
-                            <a data-id={opp.Id} onclick={showOpportunity}>{opp.Name}</a>
+                            <a data-id={opp.Id} onclick={showOpportunityEvent}>{opp.Name}</a>
                         </div>
                     </th>
                     <td data-label="Created Date">
@@ -31,7 +31,7 @@
                         <div class="slds-truncate">{opp.CloseDate}</div>
                     </td>
                     <td data-label="Amount">
-                        <div class="slds-truncate">{opp.Amount}</div>
+                        <div class="slds-truncate">${opp.Amount}</div>
                     </td>
                 </tr>
             </template>

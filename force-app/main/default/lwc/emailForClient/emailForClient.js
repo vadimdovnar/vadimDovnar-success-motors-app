@@ -26,7 +26,6 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     
     // variables:
     isDataLoading = true;
-    count = 0;
     opportunityContactRole;
     oppInvNumber;
     emailTemplateSubject;
@@ -130,16 +129,9 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         this.isDataLoading = false;
         await deleteClonedEmailTemplate( { tempApiName : this.CLONED_EMAIL_TEMPLATE_API_NAME } );
     }
+    // =====================================================================
 
     // =============================LIFECYCLE:==============================
-    connectedCallback() {
-        console.log('============CONNECTED================');
-    }
-    renderedCallback() {
-        console.log('============RERENDER================', this.count);
-        this.count = this.count + 1;
-        // this.isDataLoading = false;
-    }
     errorCallback(error, stack) {
         console.error('emailForClient: errorCallback >', error, stack);
     }
