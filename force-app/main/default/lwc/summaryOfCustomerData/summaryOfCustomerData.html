@@ -1,14 +1,120 @@
 <template>
     <lightning-card title="Accordion with Accounts and their Closed Opportunities" icon-name="standard:account">
-        <lightning-accordion allow-multiple-sections-open active-section-name="Rijwan" onsectiontoggle={handleSectionToggle}>
-            <template for:each={map} for:item="m" for:index="index">
-                <lightning-accordion-section key={m.nameAndClosedDeal} name={m.nameAndClosedDeal} label={m.nameAndClosedDeal}>
-                    <template if:true={m.accountId}>
-                        <c-account-opportunity accid={m.accountId}></c-account-opportunity>
-                    </template>
-                    <template if:false={m.accountId}> This Account has not Opportunities </template>
-                </lightning-accordion-section>
-            </template>
-        </lightning-accordion>
+        <div class="heder-block">
+            <div class="slds-form-element pageSizeControl">
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                        <select class="slds-select" id="select-01" onchange={handlePageSizeChange}>
+                            <option value="">Select…</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--Navigation controls-->
+            <div class="slds-var-p-top_small slds-align_absolute-center header-navigate">
+                <!--Previous button-->
+                <lightning-button
+                    name="buttonBackwards"
+                    label=""
+                    title=""
+                    icon-name="utility:back"
+                    onclick={handleButtonPrevious}
+                    class="slds-var-m-left_x-small"
+                    disabled={disabledPreviousButton}
+                >
+                </lightning-button>
+
+                <!--Current Status-->
+                &nbsp;&nbsp;Showing {currentPage} of {maxPages} results.
+
+                <!--Next button-->
+                <lightning-button
+                    name="buttonForwards"
+                    label=""
+                    title=""
+                    icon-name="utility:forward"
+                    onclick={handleButtonNext}
+                    class="slds-var-m-left_x-small"
+                    disabled={disabledNextButton}
+                >
+                </lightning-button>
+            </div>
+
+            <div class="slds-form-element search-input">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
+                    <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                    </svg>
+                    <input type="search" id="searchtext-input-id-47" placeholder="Search by Account Name or by Total Account..." class="slds-input" onsearch={handlerShowResult} />
+                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Clear">
+                        <svg class="slds-button__icon slds-icon-text-light" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#clear"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Clear</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!--User can specify number of rows to display per page-->
+
+        <template if:true={fieldValue}>
+            <lightning-accordion allow-multiple-sections-open active-section-name="Rijwan" onsectiontoggle={handleSectionToggle}>
+                <template for:each={newMap} for:item="m" for:index="index">
+                    <lightning-accordion-section key={m.nameAndClosedDeal} name={m.nameAndClosedDeal} label={m.nameAndClosedDeal}>
+                        <template if:true={m.accountId}>
+                            <c-account-opportunity accid={m.accountId}></c-account-opportunity>
+                        </template>
+                        <template if:false={m.accountId}> This Account has not Opportunities </template>
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+        </template>
+        <template if:false={fieldValue}>
+            <lightning-accordion allow-multiple-sections-open active-section-name="Rijwan" onsectiontoggle={handleSectionToggle}>
+                <template for:each={map} for:item="m" for:index="index">
+                    <lightning-accordion-section key={m.nameAndClosedDeal} name={m.nameAndClosedDeal} label={m.nameAndClosedDeal}>
+                        <template if:true={m.accountId}>
+                            <c-account-opportunity accid={m.accountId}></c-account-opportunity>
+                        </template>
+                        <template if:false={m.accountId}> This Account has not Opportunities </template>
+                    </lightning-accordion-section>
+                </template>
+            </lightning-accordion>
+        </template>
+
+        <!--Navigation controls-->
+        <div class="slds-var-p-top_small slds-align_absolute-center">
+            <!--Previous button-->
+            <lightning-button
+                name="buttonBackwards"
+                label=""
+                title=""
+                icon-name="utility:back"
+                onclick={handleButtonPrevious}
+                class="slds-var-m-left_x-small"
+                disabled={disabledPreviousButton}
+            >
+            </lightning-button>
+
+            <!--Current Status-->
+            &nbsp;&nbsp;Showing {currentPage} of {maxPages} results.
+
+            <!--Next button-->
+            <lightning-button
+                name="buttonForwards"
+                label=""
+                title=""
+                icon-name="utility:forward"
+                onclick={handleButtonNext}
+                class="slds-var-m-left_x-small"
+                disabled={disabledNextButton}
+            >
+            </lightning-button>
+        </div>
     </lightning-card>
 </template>

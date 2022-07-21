@@ -10,10 +10,19 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
     @api recordId;
     @track accountOpportunity = [];
     timeout = null;
+    isModalOpen = false;
+    oppId;
 
     // =========================GETTERS/SETTERS:==========================
     get opportunities() {
-        return this.accountOpportunity;
+        if( this.accountOpportunity.length > 0) {
+            return this.accountOpportunity;
+        } else {
+            return null;
+        }
+    }
+    get opportunityId() {
+        return this.oppId;
     }
     // ===================================================================
 
@@ -72,4 +81,8 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
         });
     }
     // =====================================================================
+    handleOpenModalPopup(event) {
+        this.oppId = event.target.getAttribute('data-id');
+        this.isModalOpen = true;
+    }
 }

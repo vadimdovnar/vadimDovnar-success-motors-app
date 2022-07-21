@@ -1,0 +1,20 @@
+.heder-block {
+    display: flex;
+}
+.pageSizeControl {
+    display: inline-block;
+    width: 200px;
+    /* margin: 0px; */
+    padding: 0px;
+}
+.search-input {
+    display: inline-block;
+    width: 400px;
+    /* margin: 0px; */
+    padding: 0px;
+}
+.header-navigate {
+    display: inline-block;
+    /* margin: 0px; */
+    padding: 0px;
+}
