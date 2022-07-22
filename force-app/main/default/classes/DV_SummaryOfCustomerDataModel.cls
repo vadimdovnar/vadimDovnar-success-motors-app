@@ -10,3 +10,4 @@ public with sharing class DV_SummaryOfCustomerDataModel {
                 WHERE StageName = 'Closed Won'];
     }
 }
+

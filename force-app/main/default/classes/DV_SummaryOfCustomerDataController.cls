@@ -1,6 +1,6 @@
 public with sharing class DV_SummaryOfCustomerDataController {
     
-    @AuraEnabled
+    @AuraEnabled(cacheable= true)
     public static Map<String, List<Opportunity>> getAccNameWithClosedOpp() {
 
     Map<String, List<Opportunity>> accountOppMap = new Map<String, List<Opportunity>>();

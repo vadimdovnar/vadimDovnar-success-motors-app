@@ -1,5 +1,9 @@
+:host {
+    /* padding: 0 10px; */
+}
 .heder-block {
     display: flex;
+    justify-content: flex-start;
 }
 .pageSizeControl {
     display: inline-block;
@@ -10,11 +14,9 @@
 .search-input {
     display: inline-block;
     width: 400px;
-    /* margin: 0px; */
-    padding: 0px;
+    margin-bottom: 20px;
+    padding-left: 15px;
 }
-.header-navigate {
-    display: inline-block;
-    /* margin: 0px; */
-    padding: 0px;
+.acordion-box {
+    /* padding: 0 10px 0 10px; */
 }

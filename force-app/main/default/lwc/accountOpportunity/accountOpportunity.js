@@ -35,7 +35,6 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
             console.log('============ERROR==========', error);
         } else if(data) {
             if(this.recordId) {
-                console.log('============AccountId==========', this.recordId);
                 clearTimeout(this.timeout);
                 this.timeout = setTimeout(() => {
                     console.log('timeout');
@@ -50,8 +49,7 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
     // ============================ASYNC APEX:============================
     async hasOpportunityQuery() {
         try {
-            this.accountOpportunity = await getOpportunities( { accountId : this.recordId } );
-            await console.log(this.accountOpportunity );            
+            this.accountOpportunity = await getOpportunities( { accountId : this.recordId } );            
         } catch (error) {
             console.log('============ERROR===========',error);
         }
@@ -61,8 +59,7 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
     // =============================LIFECYCLE:==============================
     async connectedCallback() {
         try {
-            this.accountOpportunity = await getOpportunities( { accountId : this.accid } );
-            await console.log(this.accountOpportunity );            
+            this.accountOpportunity = await getOpportunities( { accountId : this.accid } );            
         } catch (error) {
             console.log('============ERROR===========',error);
         }
