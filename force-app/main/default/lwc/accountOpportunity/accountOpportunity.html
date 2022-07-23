@@ -1,7 +1,7 @@
 <template>
     <template if:true={isModalOpen}>
         <div data-label="View Products">
-            <c-view-products-modal-popap onpassvalue={handleClosePopup}  oppid={opportunityId}></c-view-products-modal-popap>
+            <c-view-products-modal-popap is-modal-open={isModalOpen} onupdate={handleClosePopup}  oppid={opportunityId}></c-view-products-modal-popap>
         </div>
     </template>
     

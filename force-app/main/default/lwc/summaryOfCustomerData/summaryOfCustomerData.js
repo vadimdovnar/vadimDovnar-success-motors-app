@@ -46,7 +46,7 @@ export default class SummaryOfCustomerData extends LightningElement {
                 sum += queriedData[key][i].Amount;
                 accId = queriedData[key][i].AccountId;
             }
-            result.push({nameAndClosedDeal: "Account Name: " + key + " / Sum: " + "$" + sum, accountId: accId});
+            result.push({nameAndClosedDeal: key + " $" + sum, accountId: accId});
         }
         return result;
     }
@@ -63,7 +63,7 @@ export default class SummaryOfCustomerData extends LightningElement {
             }
             if (re.test(key.toUpperCase()) || re.test(sum)) {
                 console.log("RESULT");
-                result.push({nameAndClosedDeal: "Account Name: " + key + " / Sum: " + "$" + sum, accountId: accId});
+                result.push({nameAndClosedDeal: key + " $" + sum, accountId: accId});
             }
         }
         return result;
@@ -91,5 +91,5 @@ export default class SummaryOfCustomerData extends LightningElement {
         this._queryFields = [];
         this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
     }
-    //=========================PAGINATION===================================
+    // =====================================================================
 }

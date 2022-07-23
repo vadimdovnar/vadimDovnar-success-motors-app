@@ -63,12 +63,10 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
      @wire( getRecord, { recordId : '$recordId', fields : [OPPORTUNITY_INV_NUM, CONTACT_ID] } )
      oppContRoleInfo({error, data}) {
          if(error) {
-             
              console.log('============WIRE ERROR===========', error);
          } else if(data) {
              clearTimeout(this.timeout);
              this.timeout = setTimeout(() => {
-                 console.log('timeout');
                  this.hasOppContactRoleOpportunityQuery()
              }, 0);
              
@@ -156,8 +154,6 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         const event = new ShowToastEvent({ title, message, variant });
         this.dispatchEvent(event);
     }
-
-
     // =====================================================================
 
 

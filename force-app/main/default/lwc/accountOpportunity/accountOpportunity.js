@@ -12,7 +12,7 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
     timeout = null;
     isModalOpen = false;
     oppId;
-
+    
     // =========================GETTERS/SETTERS:==========================
     get opportunities() {
         if( this.accountOpportunity.length > 0) {
@@ -48,6 +48,7 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
 
     // ============================ASYNC APEX:============================
     async hasOpportunityQuery() {
+        console.log('====================',  this.isModalOpen );
         try {
             this.accountOpportunity = await getOpportunities( { accountId : this.recordId } );            
         } catch (error) {
@@ -78,8 +79,14 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
         });
     }
     // =====================================================================
+
+    // =============================HANDLERS:===============================
     handleOpenModalPopup(event) {
         this.oppId = event.target.getAttribute('data-id');
         this.isModalOpen = true;
     }
+    handleClosePopup(event) {
+        this.isModalOpen = event.detail.value;
+    }
+    // =====================================================================
 }
