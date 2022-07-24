@@ -46,32 +46,40 @@ public with sharing class DV_EmailForClientControllerTest {
     static void cloneEmailTemplateTest() {
         String folderId = '00D5i000001x5D4EAI';
         String tempApiName = 'Template_For_Client';
-        EmailTemplate defaultEmailTemplate = new EmailTemplate(Name = 'Template For Client', FolderId = folderId, Subject = 'Hello', Body='GGGG', TemplateType = 'text', DeveloperName = tempApiName);
+        String subject = 'INV-000003';
+        EmailTemplate defaultEmailTemplate = new EmailTemplate(Name = 'Template For Client', FolderId = folderId, Subject = subject, Body='GGGG', TemplateType = 'text', DeveloperName = tempApiName);
         insert defaultEmailTemplate;
         EmailTemplate dt = [SELECT Id, Body, DeveloperName, FolderId, Subject FROM EmailTemplate WHERE DeveloperName =: tempApiName];
 
         String clonedTempApiName = 'Email_Template';
-        // EmailTemplate clonedEmailTemplate = new EmailTemplate(Name = 'New Email Template', FolderId = folderId, Subject = 'Hello', TemplateType = 'text', DeveloperName = clonedTempApiName);
-        // insert clonedEmailTemplate;
-        // EmailTemplate ct = [SELECT Id, FolderId, DeveloperName FROM EmailTemplate WHERE DeveloperName =: clonedTempApiName];
 
-        EmailTemplate newEmailTemplate = new EmailTemplate( Name = 'Email Template',
-                                                            TemplateType = 'text',
-                                                            isActive = true,
-                                                            FolderId = dt.FolderId,
-                                                            DeveloperName = clonedTempApiName,
-                                                            Subject = dt.Subject,
-                                                            Body = dt.Body);
-        insert newEmailTemplate;
-        EmailTemplate nt = [SELECT Id, Subject, DeveloperName FROM EmailTemplate WHERE DeveloperName =: newEmailTemplate.DeveloperName];
-        System.assertEquals(true, dt.Subject == nt.Subject);
+        DV_EmailForClientController.cloneEmailTemplate(tempApiName, clonedTempApiName);
+
+        EmailTemplate nt = [SELECT Id, Subject, DeveloperName FROM EmailTemplate WHERE DeveloperName =: clonedTempApiName];
+        System.assertEquals(subject, nt.Subject);
+    }
+    @isTest
+    static void updateEmailTemplateFieldsTest() {
+        String folderId = '00D5i000001x5D4EAI';
+        String tempApiName = 'Template_For_Client';
+        String oppInvNumber = 'INV-000002';
+        EmailTemplate defaultEmailTemplate = new EmailTemplate(Name = 'Template For Client', FolderId = folderId, Subject = 'Hello', Body='GGGG', TemplateType = 'text', DeveloperName = tempApiName);
+        insert defaultEmailTemplate;
+        EmailTemplate dt = [SELECT Id, Body, DeveloperName, FolderId, Subject FROM EmailTemplate WHERE DeveloperName =: tempApiName];
+
+        String tempUpdatedApiName = 'Updated_Template';
+        EmailTemplate updatedTemplate = new EmailTemplate(Name = 'Updated Template', FolderId = folderId, Subject = 'Hi', Body='HHHHH', TemplateType = 'text', DeveloperName = tempUpdatedApiName);
+        insert updatedTemplate;
+        EmailTemplate ut = [SELECT Id, Body, DeveloperName, FolderId, Subject FROM EmailTemplate WHERE DeveloperName =: tempUpdatedApiName];
+
+        DV_EmailForClientController.updateEmailTemplateFields(tempApiName, oppInvNumber, ut.Body);
+        System.equals(oppInvNumber, dt.Subject);
     }
     @isTest
     static void deleteClonedEmailTemplateTest() {
         String tempApiName = 'Email_Template_For_Client';
         EmailTemplate newEmailTemplate = new EmailTemplate(Name = 'Email Template For Client', DeveloperName = tempApiName);
         DV_EmailForClientController.deleteClonedEmailTemplate(tempApiName);
-        delete newEmailTemplate;
         EmailTemplate emailTemplate = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName =: tempApiName];
         System.assertEquals(null, emailTemplate.DeveloperName == tempApiName);
     }
