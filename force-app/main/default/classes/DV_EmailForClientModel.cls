@@ -19,7 +19,7 @@ public with sharing class DV_EmailForClientModel {
         return [SELECT Id, (SELECT Id, Title FROM CombinedAttachments) FROM Opportunity WHERE Id =: oppId];
     }
     public static Blob getContentVersionInvoiceBody( String titleForPDF ) {
-        return [SELECT Id, VersionData FROM ContentVersion WHERE Title =: titleForPDF].VersionData;
+        return [SELECT Id, Title, VersionData FROM ContentVersion WHERE Title =: titleForPDF].VersionData;
     }
 
 }

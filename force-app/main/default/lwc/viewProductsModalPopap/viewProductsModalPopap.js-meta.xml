@@ -2,7 +2,7 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Account Opportunity</masterLabel>
+    <masterLabel>Account Product</masterLabel>
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightning__Tab</target>

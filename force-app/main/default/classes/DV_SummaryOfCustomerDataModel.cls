@@ -1,7 +1,7 @@
 public with sharing class DV_SummaryOfCustomerDataModel {
     
     public static List<Account> getAccounts() {
-        return [SELECT Id, Name FROM Account ORDER BY Name];
+        return [SELECT Id, Name FROM Account];
     }
     
     public static List<Opportunity> getOpportunities() {
