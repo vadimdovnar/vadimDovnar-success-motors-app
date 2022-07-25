@@ -6,7 +6,8 @@ public with sharing class DV_EmailForClientHandler {
         EmailTemplate temp = DV_EmailForClientController.getClonedEmailTemplate(tempApiName);
         OpportunityContactRole oppContRole = DV_EmailForClientModel.getOppContRoleByOppId(oppId);
         
-        Blob invoicePDF = DV_EmailForClientModel.getContentVersionInvoiceBody( oppContRole.Opportunity.Invoice_Number__c );    
+        Blob invoicePDF = DV_EmailForClientModel.getContentVersionInvoiceBody( oppContRole.Opportunity.Invoice_Number__c );
+
 
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         Messaging.EmailFileAttachment emailFileAttachment = new Messaging.EmailFileAttachment();

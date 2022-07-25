@@ -21,12 +21,7 @@ public with sharing class DV_TotalInvoiceNumController {
         List<ContentVersion> contentList = DV_TotalInvoiceNumModel.getContentByInvoiceNum( invoiceNumber );
         ContentVersion contVers = new ContentVersion();
         
-        if (contentList.size() > 0) {
-            Id contDocId = DV_TotalInvoiceNumModel.getIdContentByInvoiceNum( invoiceNumber );
-            contVers.ContentDocumentId = contDocId;
-            DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
-            insert contVers;
-        } else {
+        if (contentList.isEmpty()) {
             DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
             insert contVers;
 

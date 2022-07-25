@@ -15,7 +15,7 @@ public with sharing class DV_TotalInvoiceNumModel {
     public static Id getIdContentByInvoiceNum( String invNum ) {
         return [SELECT ContentDocumentId, Title 
                 FROM ContentVersion 
-                WHERE Title=:invNum].ContentDocumentId;
+                WHERE Title=:invNum LIMIT 1].ContentDocumentId;
     }
 
     public static Id getIdContentByContentVersion( ContentVersion contVers ) {
