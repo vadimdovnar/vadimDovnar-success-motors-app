@@ -57,6 +57,5 @@ public with sharing class DV_EmailForClientModelTest {
                 Blob result = DV_EmailForClientModel.getContentVersionInvoiceBody(titleForPDF);
                 System.assertEquals(false, result == null);
             Test.stopTest();
-        
     }
 }
