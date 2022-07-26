@@ -11,6 +11,7 @@ import getInvoicePDFInfo from '@salesforce/apex/DV_EmailForClientController.getI
 import updateEmailTemplateFields from '@salesforce/apex/DV_EmailForClientController.updateEmailTemplateFields';
 import cloneEmailTemplate from '@salesforce/apex/DV_EmailForClientController.cloneEmailTemplate';
 import sendEmail from '@salesforce/apex/DV_EmailForClientHandler.sendEmail';
+import getOrganizationName from '@salesforce/apex/DV_EmailForClientModel.getOrganizationName';
 
 
 
@@ -40,6 +41,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     invoicePDFInfo;
     invoicePDFId;
     emailSendingStatus;
+    organizationName;
     timeout = null;
 
     // =========================GETTERS/SETTERS:==========================
@@ -54,7 +56,12 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     }
 
     get emailBody() {
-        return this.defaultEmailTempBody;
+        let regContactName = /{!Contact.FirstName}/gi;
+        let regOrganizationName = /{!Organization.Name}/gi;
+        let currentTempBody = this.defaultEmailTempBody;
+        let newTempBody = currentTempBody.replace(regContactName, this.opportunityContactRole.Contact.FirstName);
+        newTempBody = newTempBody.replace(regOrganizationName, this.organizationName.Name);
+        return newTempBody;
     }
 
     // ===================================================================
@@ -79,7 +86,7 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
     async hasOppContactRoleOpportunityQuery() {
         try {
             this.opportunityContactRole = await getOppContRoleByOppId( { oppId : this.recordId } );
-            await console.log(this.opportunityContactRole);
+            this.organizationName = await getOrganizationName();
             this.oppInvNumber = await this.opportunityContactRole.Opportunity.Invoice_Number__c;
             this.contName = await this.opportunityContactRole.Contact.Name;
             this.contEmail = await this.opportunityContactRole.Contact.Email;
@@ -88,7 +95,6 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
             this.invoicePDFInfo = await getInvoicePDFInfo({ oppId : this.recordId});
             this.invoicePDFId = await this.invoicePDFInfo.CombinedAttachments[0].Id;
             this.isDataLoading = false;
-            
             
         } catch (error) {
             console.log('============ERROR===========',error);

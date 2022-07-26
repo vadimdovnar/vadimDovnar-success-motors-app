@@ -21,5 +21,9 @@ public with sharing class DV_EmailForClientModel {
     public static Blob getContentVersionInvoiceBody( String titleForPDF ) {
         return [SELECT Id, Title, VersionData FROM ContentVersion WHERE Title =: titleForPDF].VersionData;
     }
+    @AuraEnabled
+    public static Organization getOrganizationName() {
+        return [SELECT Id, Name FROM Organization];
+    }
 
 }
