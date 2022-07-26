@@ -14,10 +14,10 @@ global class DV_myOpportunityEmailHandler implements Messaging.InboundEmailHandl
             try {
                 Opportunity opp = [SELECT Id, Name, StageName, Invoice_Number__c FROM Opportunity WHERE Invoice_Number__c =: mySubject LIMIT 1];
                                 
-                    if(opp.StageName == 'Prospecting' || positiveAnswer ) {
+                    if(opp.StageName == 'Prospecting' && positiveAnswer ) {
                         opp.StageName = 'Qualification';
                         opportunityList.add(opp);
-                    } else if (opp.StageName == 'Prospecting' || negativeAnswer) {
+                    } else if (opp.StageName == 'Prospecting' && negativeAnswer) {
                         opp.StageName = 'Closed lost';
                         opportunityList.add(opp);
                     }

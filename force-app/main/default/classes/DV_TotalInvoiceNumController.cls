@@ -1,9 +1,9 @@
 public with sharing class DV_TotalInvoiceNumController {
 
-    private Opportunity currentOpportunity;
-    private Opportunity duplicateOpportunity;
-    private String oppId;
-    private String invoiceNumber;
+    Opportunity currentOpportunity;
+    Opportunity duplicateOpportunity;
+    String oppId;
+    String invoiceNumber;
 
     public DV_TotalInvoiceNumController(ApexPages.StandardController standartController) {
         currentOpportunity = (Opportunity) standartController.getRecord();
@@ -14,9 +14,14 @@ public with sharing class DV_TotalInvoiceNumController {
 
     public Pagereference addPage() {
         Blob pdf;
+        
         Pagereference totalInvoicePage = Page.DV_TotalInvoice;
         totalInvoicePage.getParameters().put('opportunity', oppId);
-        pdf = totalInvoicePage.getContent();
+        if(Test.isRunningTest()) { 
+            pdf = blob.valueOf('Unit.Test');
+        } else {
+            pdf = totalInvoicePage.getContent();
+        }
         
         List<ContentVersion> contentList = DV_TotalInvoiceNumModel.getContentByInvoiceNum( invoiceNumber );
         ContentVersion contVers = new ContentVersion();

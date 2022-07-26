@@ -6,7 +6,13 @@ public with sharing class DV_EmailForClientHandler {
         EmailTemplate temp = DV_EmailForClientController.getClonedEmailTemplate(tempApiName);
         OpportunityContactRole oppContRole = DV_EmailForClientModel.getOppContRoleByOppId(oppId);
         
-        Blob invoicePDF = DV_EmailForClientModel.getContentVersionInvoiceBody( oppContRole.Opportunity.Invoice_Number__c );
+        Blob invoicePDF;
+
+        if(Test.isRunningTest()) { 
+            invoicePDF = blob.valueOf('Unit.Test');
+        } else {
+            invoicePDF = DV_EmailForClientModel.getContentVersionInvoiceBody( oppContRole.Opportunity.Invoice_Number__c );
+        }
 
 
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
