@@ -3,11 +3,7 @@ public with sharing class DV_EmailForClientModelTest {
     
     @TestSetup
     static void makeData(){
-        Profile p = [SELECT Id FROM Profile WHERE Name='Standard Test User']; 
-        User u = new User(Alias = 'standt', Email='standardtestuser@force.com', 
-        EmailEncodingKey='UTF-8', LastName='TestUser', LanguageLocaleKey='en_US', 
-        LocaleSidKey='en_US', ProfileId = p.Id, 
-        TimeZoneSidKey='America/Los_Angeles', UserName='standardtestuser@force.com');
+        
          Opportunity opp = new Opportunity(Name = 'Test', CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Closed Won');
          insert opp;
          Contact con = new Contact(FirstName = 'John', LastName = 'Test Name');
@@ -42,26 +38,25 @@ public with sharing class DV_EmailForClientModelTest {
         System.assertEquals(false, result == null);
     }
     @isTest
-    static void getContentVersionInvoiceBodyTest(){
-        System.runAs(u){
+    static void getContentVersionInvoiceBodyTest() {
             Test.startTest();
-            Account accRecord = new Account(Name = 'John');
-            Blob bodyBlob = Blob.valueOf('UnitTest');
-            ContentVersion contVersion_1 = new ContentVersion(Title = 'Test', PathOnClient = 'Test.jpg', VersionData = bodyBlob, origin = 'H');
-            insert contVersion_1;
-            ContentVersion contVersion_2 = [SELECT Id, Title, ContentDocumentId FROM ContentVersion WHERE Id =: contVersion_1.Id LIMIT 1];
+                Account accRecord = new Account(Name = 'John');
+                Account acc = [SELECT Id FROM Account WHERE Name = 'John' LIMIT 1];
+                Blob bodyBlob = Blob.valueOf('UnitTest');
+                ContentVersion contVersion_1 = new ContentVersion(Title = 'Test', PathOnClient = 'Test.jpg', VersionData = bodyBlob, origin = 'H');
+                insert contVersion_1;
+                ContentVersion contVersion_2 = [SELECT Id, Title, ContentDocumentId FROM ContentVersion WHERE Id =: contVersion_1.Id LIMIT 1];
 
-            ContentDocumentLink contententLink = new ContentDocumentLink();
-            contententLink.LinkedEntityId = accRecord.Id;
-            contententLink.ContentDocumentId = contVersion_2.ContentDocumentId;
-            contententLink.ShareType = 'V';
-            insert contententLink;
+                ContentDocumentLink contententLink = new ContentDocumentLink();
+                contententLink.LinkedEntityId = acc.Id;
+                contententLink.ContentDocumentId = contVersion_2.ContentDocumentId;
+                contententLink.ShareType = 'V';
+                insert contententLink;
 
-            String titleForPDF = 'Test';
-            Blob result = DV_EmailForClientModel.getContentVersionInvoiceBody(titleForPDF);
-            System.assertEquals(titleForPDF, result.Title);
+                String titleForPDF = 'Test';
+                Blob result = DV_EmailForClientModel.getContentVersionInvoiceBody(titleForPDF);
+                System.assertEquals(false, result == null);
             Test.stopTest();
-        }
+        
     }
-
 }

@@ -11,7 +11,7 @@ import getInvoicePDFInfo from '@salesforce/apex/DV_EmailForClientController.getI
 import updateEmailTemplateFields from '@salesforce/apex/DV_EmailForClientController.updateEmailTemplateFields';
 import cloneEmailTemplate from '@salesforce/apex/DV_EmailForClientController.cloneEmailTemplate';
 import sendEmail from '@salesforce/apex/DV_EmailForClientHandler.sendEmail';
-import getOrganizationName from '@salesforce/apex/DV_EmailForClientModel.getOrganizationName';
+import getOrganizationName from '@salesforce/apex/DV_EmailForClientController.getOrganizationName';
 
 
 

@@ -45,4 +45,8 @@ public with sharing class DV_EmailForClientController {
     public static Opportunity getInvoicePDFInfo( String oppId ) {
         return DV_EmailForClientModel.getInvoicePDFInfoByOppId(oppId);
     }
+    @AuraEnabled
+    public static Organization getOrganizationName() {
+        return [SELECT Id, Name FROM Organization];
+    }
 }
