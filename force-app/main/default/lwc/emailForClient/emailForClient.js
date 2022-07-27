@@ -116,7 +116,12 @@ export default class EmailForClient extends NavigationMixin(LightningElement) {
         })
     }
     handleChangeEmailTemp(e) {
-        this.changedEmailTempBody = e.target.value;
+        let regContFirstName = new RegExp(`${this.opportunityContactRole.Contact.FirstName}`);
+        let regOrganizationName = new RegExp(`${this.organizationName.Name}`);
+        let changedTempBody =  e.target.value;
+        changedTempBody = changedTempBody.replace(regContFirstName, '{!Contact.FirstName}');
+        changedTempBody = changedTempBody.replace(regOrganizationName, '{!Organization.Name}');
+        this.changedEmailTempBody = changedTempBody;
     }
     async handleSendEmail() {
         this.isDataLoading = true;
