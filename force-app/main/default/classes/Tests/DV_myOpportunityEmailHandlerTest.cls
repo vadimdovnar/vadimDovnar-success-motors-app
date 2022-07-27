@@ -1,22 +1,55 @@
 @isTest
 private class DV_myOpportunityEmailHandlerTest {
+
+    @TestSetup
+    static void makeData(){
+        
+    }
     
 
     static testMethod void updateOppStatusTest() {
 
-        Test.startTest();
+        Contact Con = new Contact();
+        con.LastName = 'sample';
+        con.Email = 'someaddress@email.com';
+        insert con;
+        
         Messaging.InboundEmail email = new Messaging.InboundEmail() ;
-            Messaging.InboundEnvelope env  = new Messaging.InboundEnvelope();
-            email.subject = 'INV-000001';
-            email.plainTextBody = 'I AM APPROV';
-            List<Opportunity> opportunityList = new List <Opportunity>();
+        Messaging.InboundEnvelope env = new Messaging.InboundEnvelope();
+            
+        email.subject = 'RE INV-0000001';
+        email.fromAddress = 'someaddress@email.com';
+        email.plainTextBody = 'I am Approved';
 
-            Opportunity opp = new Opportunity(Name = email.subject, CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Prospecting');
-            insert opp;
+        Opportunity opp = new Opportunity(Name = 'Test', CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Prospecting');
+        insert opp;
 
-            DV_myOpportunityEmailHandler updateOpp = new DV_myOpportunityEmailHandler();
-            updateOpp.handleInboundEmail(email, env );
-
-        Test.stopTest();
+        DV_myOpportunityEmailHandler updateOpp = new DV_myOpportunityEmailHandler();
+        updateOpp.handleInboundEmail(email, env );
+    
     }
+
+    static testMethod void updateOppStatusTest2() {
+
+        Contact Con = new Contact();
+        con.LastName = 'sample';
+        con.Email = 'someaddress@email.com';
+        insert con;
+        
+        Messaging.InboundEmail email = new Messaging.InboundEmail() ;
+        Messaging.InboundEnvelope env = new Messaging.InboundEnvelope();
+            
+        email.subject = 'RE INV-0000001';
+        email.fromAddress = 'someaddress@email.com';
+        email.plainTextBody = 'I am Rejected';
+
+        Opportunity opp = new Opportunity(Name = 'Test', CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Prospecting');
+        insert opp;
+        
+        DV_myOpportunityEmailHandler updateOpp = new DV_myOpportunityEmailHandler();
+        updateOpp.handleInboundEmail(email, env );
+    
+    }
+
+
 }

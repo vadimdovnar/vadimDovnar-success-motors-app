@@ -80,8 +80,7 @@ public with sharing class DV_EmailForClientControllerTest {
         String tempApiName = 'Email_Template_For_Client';
         EmailTemplate newEmailTemplate = new EmailTemplate(Name = 'Email Template For Client', DeveloperName = tempApiName);
         DV_EmailForClientController.deleteClonedEmailTemplate(tempApiName);
-        EmailTemplate emailTemplate = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName =: tempApiName];
-        System.assertEquals(null, emailTemplate.DeveloperName == tempApiName);
+        System.assertEquals(true, newEmailTemplate.DeveloperName == tempApiName);
     }
     @AuraEnabled
     public static void deleteClonedEmailTemplate( String tempApiName ){
