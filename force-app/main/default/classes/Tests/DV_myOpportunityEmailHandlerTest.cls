@@ -23,7 +23,7 @@ private class DV_myOpportunityEmailHandlerTest {
 
         Opportunity opp = new Opportunity(Name = 'Test', CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Prospecting');
         insert opp;
-
+        Opportunity oppQuery = [SELECT Id, Name, StageName, Invoice_Number__c FROM Opportunity WHERE StageName = 'Prospecting' LIMIT 1];
         DV_myOpportunityEmailHandler updateOpp = new DV_myOpportunityEmailHandler();
         updateOpp.handleInboundEmail(email, env );
     
@@ -45,6 +45,7 @@ private class DV_myOpportunityEmailHandlerTest {
 
         Opportunity opp = new Opportunity(Name = 'Test', CloseDate = Date.newinstance(2022, 07, 30), StageName = 'Prospecting');
         insert opp;
+        Opportunity oppQuery = [SELECT Id, Name, StageName, Invoice_Number__c FROM Opportunity WHERE StageName = 'Prospecting' LIMIT 1];
         
         DV_myOpportunityEmailHandler updateOpp = new DV_myOpportunityEmailHandler();
         updateOpp.handleInboundEmail(email, env );
