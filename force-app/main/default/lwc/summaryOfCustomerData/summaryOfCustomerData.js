@@ -76,16 +76,17 @@ export default class SummaryOfCustomerData extends LightningElement {
 
     async handlerShowResult(event) {
         this._searchFieldValue = event.target.value;
+        console.log(this._searchFieldValue);
         this._queryFields = [];
         if (!this._searchFieldValue) {
             this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
         } else {
             this._queryFields = await this.handlerIterationAccountsForSearch(this._queriedData);
         }
-        this._searchFieldValue = null;
     }
 
     async handelClearSearch(event) {
+        this._searchFieldValue = null;
         let elem = this.template.querySelector('.search-input');
         elem.value = '';
         this._queryFields = [];
