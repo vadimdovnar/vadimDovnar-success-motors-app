@@ -34,6 +34,11 @@ export default class SummaryOfCustomerData extends LightningElement {
         this._queriedData = await getAccNameWithClosedOpp();
         this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
     }
+
+    async renderedCallback() {
+        console.log('rerender called');
+        
+    }
     // =====================================================================
 
     // =============================HANDLERS:===============================
