@@ -7,7 +7,7 @@ public with sharing class DV_TotalInvoiceNumModel {
     }
 
     public static List<ContentVersion> getContentByInvoiceNum( String invNum ) {
-        return [SELECT ContentDocumentId, Title 
+        return [SELECT ContentDocumentId, Title, VersionData, PathOnClient
                 FROM ContentVersion 
                 WHERE Title=:invNum];
     }

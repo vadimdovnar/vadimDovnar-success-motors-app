@@ -15,7 +15,7 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
     
     // =========================GETTERS/SETTERS:==========================
     get opportunities() {
-        if( this.accountOpportunity.length > 0) {
+        if(this.accountOpportunity.length) {
             return this.accountOpportunity;
         } else {
             return null;
@@ -38,10 +38,11 @@ export default class AccountOpportunity extends NavigationMixin(LightningElement
                 clearTimeout(this.timeout);
                 this.timeout = setTimeout(() => {
                     console.log('timeout');
-                    this.hasOpportunityQuery()
+                    this.hasOpportunityQuery();
                 }, 0);
             } 
         }
+
     }
 
     // ===================================================================

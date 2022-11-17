@@ -4,6 +4,7 @@ public with sharing class DV_TotalInvoiceNumController {
     Opportunity duplicateOpportunity;
     String oppId;
     String invoiceNumber;
+    Id contDocId;
 
     public DV_TotalInvoiceNumController(ApexPages.StandardController standartController) {
         currentOpportunity = (Opportunity) standartController.getRecord();
@@ -30,7 +31,21 @@ public with sharing class DV_TotalInvoiceNumController {
             DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
             insert contVers;
 
-            Id contDocId = DV_TotalInvoiceNumModel.getIdContentByContentVersion( contVers );
+            contDocId = DV_TotalInvoiceNumModel.getIdContentByContentVersion( contVers );
+            ContentDocumentLink contDocLink = new ContentDocumentLink();
+            contDocLink.ContentDocumentId = contDocId;
+            contDocLink.ShareType = 'V';
+            contDocLink.LinkedEntityId = oppId;
+            insert contDocLink;
+        } else {
+            contDocId = contentList[0].ContentDocumentId;
+            ContentDocument cont = [SELECT Id, Title, ContentSize FROM ContentDocument WHERE Id =: contDocId];
+            delete cont;
+
+            DV_TotalInvoiceNumHandler.setParamsForContentVersion(contVers, invoiceNumber, pdf);
+            insert contVers;
+
+            contDocId = DV_TotalInvoiceNumModel.getIdContentByContentVersion( contVers );
             ContentDocumentLink contDocLink = new ContentDocumentLink();
             contDocLink.ContentDocumentId = contDocId;
             contDocLink.ShareType = 'V';
