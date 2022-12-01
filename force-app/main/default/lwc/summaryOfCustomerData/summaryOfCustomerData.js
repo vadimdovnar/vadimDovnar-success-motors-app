@@ -1,5 +1,6 @@
 import {LightningElement} from "lwc";
 
+import getAccsNameWithClosedOpp from "@salesforce/apex/DV_SummaryOfCustomerDataController.getAccsNameWithClosedOpp";
 import getAccNameWithClosedOpp from "@salesforce/apex/DV_SummaryOfCustomerDataController.getAccNameWithClosedOpp";
 export default class SummaryOfCustomerData extends LightningElement {
     
@@ -9,6 +10,16 @@ export default class SummaryOfCustomerData extends LightningElement {
     _queriedData;
     _searchFieldValue = null;
     _pageSizeValue = "10";
+    _isAccountDetail = false;
+    accountId;
+
+    constructor() {
+        super();
+        const currentUrl = window.location.pathname;
+        const result = currentUrl.split('/');
+        this.accountId = result[result.length - 2];
+        this._isAccountDetail = result.includes('r') || result.includes('Account') || result.includes('view') ? true : false;
+    }
 
     // ========================GETTERS AND SETTERS:=========================
     get queryFields() {
@@ -19,6 +30,9 @@ export default class SummaryOfCustomerData extends LightningElement {
     }
     get searchFieldValue() {
         return this._searchFieldValue;
+    }
+    get isAccountDetail() {
+        return this._isAccountDetail;
     }
     set searchFieldValue(value) {
         this.setAttribute('value', value);
@@ -31,13 +45,15 @@ export default class SummaryOfCustomerData extends LightningElement {
 
     // =============================LIFECYCLE:==============================
     async connectedCallback() {
-        this._queriedData = await getAccNameWithClosedOpp();
-        this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
-    }
-
-    async renderedCallback() {
-        console.log('rerender called');
-        
+        if(this._isAccountDetail) {
+            this._queriedData = await getAccNameWithClosedOpp( { accountId : this.accountId } );
+            this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
+            console.log('=====field query====', this._queryFields);
+        } else {
+            console.log('callback false');
+            this._queriedData = await getAccsNameWithClosedOpp();
+            this._queryFields = await this.handlerIterationAllAccounts(this._queriedData);
+        }
     }
     // =====================================================================
 

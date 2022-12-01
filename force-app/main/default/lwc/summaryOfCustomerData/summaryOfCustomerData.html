@@ -1,50 +1,69 @@
 <template>
-    <lightning-card title="Accordion with Accounts and their Closed Opportunities" icon-name="standard:account">
-        <div class="heder-block">
-            <div class="slds-form-element search-input">
-                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right search-box">
-                    <lightning-icon
-                        class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
-                        icon-name="utility:search"
-                        size="x-small"
-                        alternative-text="Approved"
-                        title="Approved"
-                    ></lightning-icon>
-                    <input
-                        type="search"
-                        value={searchFieldValue}
-                        id="searchtext-input-id-47"
-                        placeholder="Search by Account Name or by Total Account..."
-                        class="slds-input search-input"
-                        onkeyup={handlerShowResult}
-                    />
-                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Clear" onclick={handelClearSearch}>
+    <template if:false={isAccountDetail}>
+        <lightning-card title="Accordion with Accounts and their Closed Opportunities" icon-name="standard:account">
+            <div class="heder-block">
+                <div class="slds-form-element search-input">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right search-box">
                         <lightning-icon
-                            class="slds-button__icon slds-icon-text-light"
-                            icon-name="utility:close"
+                            class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default"
+                            icon-name="utility:search"
                             size="x-small"
                             alternative-text="Approved"
                             title="Approved"
                         ></lightning-icon>
-                    </button>
+                        <input
+                            type="search"
+                            value={searchFieldValue}
+                            id="searchtext-input-id-47"
+                            placeholder="Search by Account Name or by Total Account..."
+                            class="slds-input search-input"
+                            onkeyup={handlerShowResult}
+                        />
+                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Clear" onclick={handelClearSearch}>
+                            <lightning-icon
+                                class="slds-button__icon slds-icon-text-light"
+                                icon-name="utility:close"
+                                size="x-small"
+                                alternative-text="Approved"
+                                title="Approved"
+                            ></lightning-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <lightning-accordion class="acordion-box" allow-multiple-sections-open>
-            <template if:true={isData}>
-                <template for:each={visibleFields} for:item="item" for:index="index">
-                    <lightning-accordion-section key={item.nameAndClosedDeal} name={item.nameAndClosedDeal} label={item.nameAndClosedDeal}>
-                        <template if:true={item.accountId}>
-                            <c-account-opportunity accid={item.accountId}></c-account-opportunity>
-                        </template>
-                        <template if:false={item.accountId}> This Account has not Opportunities </template>
-                    </lightning-accordion-section>
+    
+            <lightning-accordion class="acordion-box" allow-multiple-sections-open>
+                <template if:true={isData}>
+                    <template for:each={visibleFields} for:item="item" for:index="index">
+                        <lightning-accordion-section key={item.nameAndClosedDeal} name={item.nameAndClosedDeal} label={item.nameAndClosedDeal}>
+                            <template if:true={item.accountId}>
+                                <c-account-opportunity accid={item.accountId}></c-account-opportunity>
+                            </template>
+                            <template if:false={item.accountId}> This Account has not Opportunities </template>
+                        </lightning-accordion-section>
+                    </template>
                 </template>
-            </template>
-        </lightning-accordion>
-        <div slot="footer" class="slds-var-m-vertical_medium">
-            <c-paginator records={queryFields} record-size={pageSizeValue} onupdate={handlerUpdateAccountRecords}></c-paginator>
-        </div>
-    </lightning-card>
+            </lightning-accordion>
+            <div slot="footer" class="slds-var-m-vertical_medium">
+                <c-paginator records={queryFields} record-size={pageSizeValue} onupdate={handlerUpdateAccountRecords}></c-paginator>
+            </div>
+        </lightning-card>
+    </template>
+
+    <template if:true={isAccountDetail}>
+        <lightning-card title="Accordion with Closed Won Opportunities" icon-name="standard:account">
+            <lightning-accordion class="acordion-box" allow-multiple-sections-open>
+                <template if:true={isData}>
+                    <template for:each={queryFields} for:item="item" for:index="index">
+                        <lightning-accordion-section key={item.nameAndClosedDeal} name={item.nameAndClosedDeal} label={item.nameAndClosedDeal}>
+                            <template if:true={item.accountId}>
+                                <c-account-opportunity accid={item.accountId}></c-account-opportunity>
+                            </template>
+                            <template if:false={item.accountId}>This Account has not Opportunities</template>
+                        </lightning-accordion-section>
+                    </template>
+                </template>
+            </lightning-accordion>
+        </lightning-card>
+    </template>
 </template>
